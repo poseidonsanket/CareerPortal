@@ -40,10 +40,10 @@ export const Header = () => {
               <Link href="/">Home</Link>
             </li>
             <li>
-              <Link href="/internships">Internships</Link>
+              <Link href="/internship">Internships</Link>
             </li>
             <li>
-              <Link href="/jobs">Jobs</Link>
+              <Link href="/job">Jobs</Link>
             </li>
             <li>
               <Link href="/experience">Interviews</Link>
@@ -52,10 +52,10 @@ export const Header = () => {
               <Popover>
                 <PopoverTrigger>Add Content</PopoverTrigger>
                 <PopoverContent className="bg-[#1F2937] text-white border border-white w-56 p-0 mt-4">
-                  <ButtonOutline value={"Add Jobs"} href={"/jobs/add"} />
+                  <ButtonOutline value={"Add Jobs"} href={"/job/add"} />
                   <ButtonOutline
                     value={"Add Internships"}
-                    href={"/internships/add"}
+                    href={"/internship/add"}
                   />
                   <ButtonOutline
                     value={"Add Experience"}
