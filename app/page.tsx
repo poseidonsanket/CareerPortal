@@ -1,5 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-
+import LandingPage from "@/components/LandingPage";
 
 export default async function Index() {
   const canInitSupabaseClient = () => {
@@ -13,5 +13,9 @@ export default async function Index() {
 
   const isSupabaseConnected = canInitSupabaseClient();
 
-  return <div></div>;
+  return (
+    <div>
+      <LandingPage />
+    </div>
+  );
 }
