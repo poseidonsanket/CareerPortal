@@ -4,7 +4,7 @@ import Contact from "./Contact";
 const LandingPage = () => {
   return (
     <div className="w-full">
-      <section className="container mx-auto mt-10 md:mt-20">
+      <section className="container mx-auto mt-40 md:mt-40">
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold mb-4">Discover Your Future</h1>
           <p className="text-gray-400 text-lg">

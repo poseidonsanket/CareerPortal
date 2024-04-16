@@ -34,7 +34,7 @@ const Form = (props: formProps) => {
 
   const { text } = props;
   return (
-    <div className="bg-gray-900 text-white w-screen">
+    <div className="bg-gray-900 text-white mx-4 mt-40 md:mt-40 mb-10">
       <div className="flex justify-center items-center mt-20">
         <form className="w-full max-w-lg" onSubmit={handleSubmit} ref={formRef}>
           <div className="flex flex-wrap -mx-3 mb-6">

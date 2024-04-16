@@ -2,7 +2,7 @@ import React from "react";
 
 const Contact = () => {
   return (
-    <div className="bg-inherit py-10 rounded-lg mx-auto">
+    <div className="bg-inherit py-10 rounded-lg md:mx-auto mx-4">
       <div className="text-center mb-6">
         <h2 className="text-3xl font-bold mb-3">Contact Me</h2>
         <p className="text-gray-400">
