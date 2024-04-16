@@ -1,44 +1,72 @@
-import NextLogo from "./NextLogo";
-import SupabaseLogo from "./SupabaseLogo";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-export default function Header() {
+interface ButtonOutlineProps {
+  value: string;
+  href: string;
+}
+
+export function ButtonOutline(props: ButtonOutlineProps) {
+  const { value, href } = props;
   return (
-    <div className="flex flex-col gap-16 items-center">
-      <div className="flex gap-8 justify-center items-center">
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <SupabaseLogo />
-        </a>
-        <span className="border-l rotate-45 h-6" />
-        <a href="https://nextjs.org/" target="_blank" rel="noreferrer">
-          <NextLogo />
-        </a>
-      </div>
-      <h1 className="sr-only">Supabase and Next.js Starter Template</h1>
-      <p className="text-3xl lg:text-4xl !leading-tight mx-auto max-w-xl text-center">
-        The fastest way to build apps with{" "}
-        <a
-          href="https://supabase.com/?utm_source=create-next-app&utm_medium=template&utm_term=nextjs"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
-        >
-          Supabase
-        </a>{" "}
-        and{" "}
-        <a
-          href="https://nextjs.org/"
-          target="_blank"
-          className="font-bold hover:underline"
-          rel="noreferrer"
-        >
-          Next.js
-        </a>
-      </p>
-      <div className="w-full p-[1px] bg-gradient-to-r from-transparent via-foreground/10 to-transparent my-8" />
-    </div>
+    <Button
+      variant="outline"
+      className="bg-[#1F2937] text-white m-0 block w-full text-lg border border-white"
+    >
+      <Link href={href}>{value}</Link>
+    </Button>
   );
 }
+
+export const Header = () => {
+  return (
+    <div className="text-2xl h-fit w-screen text-white bg-[#1F2937] rounded-lg">
+      <div className="flex justify-between items-center py-5">
+        <div>
+          <h1 className="pl-10">
+            <span>Career</span>
+            {" "}
+            <span className="text-blue-500">Portal</span>
+          </h1>
+        </div>
+        <div>
+          <ul className="flex items-center gap-10 pr-10">
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+            <li>
+              <Link href="/internships">Internships</Link>
+            </li>
+            <li>
+              <Link href="/jobs">Jobs</Link>
+            </li>
+            <li>
+              <Link href="/experience">Interviews</Link>
+            </li>
+            <li>
+              <Popover>
+                <PopoverTrigger>Add Content</PopoverTrigger>
+                <PopoverContent className="bg-[#1F2937] text-white border border-white w-56 p-0 mt-4">
+                  <ButtonOutline value={"Add Jobs"} href={"/jobs/add"} />
+                  <ButtonOutline
+                    value={"Add Internships"}
+                    href={"/internships/add"}
+                  />
+                  <ButtonOutline
+                    value={"Add Experience"}
+                    href={"/experience/add"}
+                  />
+                </PopoverContent>
+              </Popover>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};
