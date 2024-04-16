@@ -46,7 +46,7 @@ export const Header = () => {
               <Link href="/job">Jobs</Link>
             </li>
             <li>
-              <Link href="/experience">Interviews</Link>
+              <Link href="/interview">Interviews</Link>
             </li>
             <li>
               <Popover>
@@ -59,7 +59,7 @@ export const Header = () => {
                   />
                   <ButtonOutline
                     value={"Add Experience"}
-                    href={"/experience/add"}
+                    href={"/interview/add"}
                   />
                 </PopoverContent>
               </Popover>
