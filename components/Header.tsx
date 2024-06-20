@@ -19,7 +19,13 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import { useRouter } from "next/navigation";
+import app from "../firebase";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  signOut,
+} from "firebase/auth";
 
 interface ButtonOutlineProps {
   value: string;
@@ -53,13 +59,46 @@ export function ButtonWithIcon({ data }: LoginButtonProps) {
 export const Header = () => {
   const [isMenu, setIsMenu] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
-  const router = useRouter();
   const handleMenu = () => {
     setIsMenu((isMenu) => !isMenu);
   };
   const closeMenu = () => {
     setIsMenu(false);
   };
+
+  const signIn = () => {
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        setIsLogin(true);
+        const credential = GoogleAuthProvider.credentialFromResult(result);
+        const token = credential?.accessToken;
+        const user = result.user;
+        const email = result.user.email;
+        const uid = result.user.uid;
+        localStorage.setItem("userid", uid);
+      })
+      .catch((error) => {
+        alert("Error logging in");
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.customData.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+  };
+
+  const signOut = () => {
+    localStorage.removeItem("userid");
+    setIsLogin(false);
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userid");
+    if (userId) {
+      setIsLogin(true);
+    }
+  }, []);
 
   return (
     <div className="text-2xl h-fit  text-white bg-[#1F2937] rounded-lg fixed w-screen">
@@ -106,12 +145,12 @@ export const Header = () => {
               </Popover>
             </li>
             {!isLogin && (
-              <li>
+              <li onClick={signIn}>
                 <ButtonWithIcon data="Login with Gmail" />
               </li>
             )}
             {isLogin && (
-              <li>
+              <li onClick={signOut}>
                 <ButtonWithIcon data="LogOut" />
               </li>
             )}
@@ -165,12 +204,12 @@ export const Header = () => {
               </NavigationMenu>
             </li>
             {!isLogin && (
-              <li>
+              <li onClick={signIn}>
                 <ButtonWithIcon data="Login with Gmail" />
               </li>
             )}
             {isLogin && (
-              <li>
+              <li onClick={signOut}>
                 <ButtonWithIcon data="LogOut" />
               </li>
             )}
