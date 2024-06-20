@@ -1,26 +1,37 @@
-import React from "react";
+"use client"
+import React, { useEffect } from "react";
 import Form from "@/components/Form";
 import Footer from "@/components/Footer";
-import ProtectedRoute from "@/components/ProtectedRoute";
+import { usegetUserId } from "@/lib/hook";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  return (
-    <ProtectedRoute>
-      <div className="flex flex-col min-h-screen min-w-screen">
-        <button
-          type="button"
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Go back to Home page
-        </button>
+  const authenticated = usegetUserId();
+  const router = useRouter();
+  console.log(authenticated);
 
-        <div className="flex-1 -mt-20">
-          <Form text={"Internship"} />;
-        </div>
+  useEffect(() => {
+    if (!authenticated) {
+      router.push("/");
+    }
+  }, []);
+  return !authenticated ? (
+    <div>Redirecting... Please Log In</div>
+  ) : (
+    <div className="flex flex-col min-h-screen min-w-screen">
+      <button
+        type="button"
+        className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+      >
+        Go back to Home page
+      </button>
 
-        <Footer />
+      <div className="flex-1 -mt-20">
+        <Form text={"Internship"} />;
       </div>
-    </ProtectedRoute>
+
+      <Footer />
+    </div>
   );
 };
 
