@@ -1,7 +1,12 @@
 import React from "react";
+import InterviewForm from "@/components/interviewForm";
 
 const page = () => {
-  return <div className="mt-40 md:mt-40">page</div>;
+  return (
+    <div>
+      <InterviewForm />
+    </div>
+  );
 };
 
 export default page;

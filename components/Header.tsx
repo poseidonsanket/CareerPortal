@@ -9,8 +9,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineClose } from "react-icons/md";
-import { useState } from "react";
-import MobileNav from "./MobileNav";
+import { useEffect, useState } from "react";
+import { Mail } from "lucide-react";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -19,10 +19,15 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
+import { useRouter } from "next/navigation";
 
 interface ButtonOutlineProps {
   value: string;
   href: string;
+}
+
+interface LoginButtonProps {
+  data: string;
 }
 
 export function ButtonOutline(props: ButtonOutlineProps) {
@@ -37,16 +42,30 @@ export function ButtonOutline(props: ButtonOutlineProps) {
   );
 }
 
+export function ButtonWithIcon({ data }: LoginButtonProps) {
+  return (
+    <Button>
+      <Mail className="mr-2 h-4 w-4" /> {data}
+    </Button>
+  );
+}
+
 export const Header = () => {
   const [isMenu, setIsMenu] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
+  const router = useRouter();
   const handleMenu = () => {
-    setIsMenu(!isMenu);
+    setIsMenu((isMenu) => !isMenu);
   };
+  const closeMenu = () => {
+    setIsMenu(false);
+  };
+
   return (
     <div className="text-2xl h-fit  text-white bg-[#1F2937] rounded-lg fixed w-screen">
       <div className="flex justify-between items-center py-5">
         <div>
-          <h1 className="md:pl-10 pl-4">
+          <h1 className="md:pl-10 pl-4" onClick={closeMenu}>
             <Link href="/">
               <span>Career</span> <span className="text-blue-500">Portal</span>
             </Link>
@@ -86,6 +105,16 @@ export const Header = () => {
                 </PopoverContent>
               </Popover>
             </li>
+            {!isLogin && (
+              <li>
+                <ButtonWithIcon data="Login with Gmail" />
+              </li>
+            )}
+            {isLogin && (
+              <li>
+                <ButtonWithIcon data="LogOut" />
+              </li>
+            )}
           </ul>
         </div>
       </div>
@@ -135,6 +164,16 @@ export const Header = () => {
                 </NavigationMenuList>
               </NavigationMenu>
             </li>
+            {!isLogin && (
+              <li>
+                <ButtonWithIcon data="Login with Gmail" />
+              </li>
+            )}
+            {isLogin && (
+              <li>
+                <ButtonWithIcon data="LogOut" />
+              </li>
+            )}
           </ul>
         </div>
       )}
