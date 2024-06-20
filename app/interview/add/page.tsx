@@ -1,29 +1,28 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import InterviewForm from "@/components/interviewForm";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
-import { usegetUserId } from "@/lib/hook";
+import { Header } from "@/components/Header";
 
 const page = () => {
-  const authenticated = usegetUserId();
+  const [isAutheticated, setIsAuthenticated] = useState<string | null>(null);
   const router = useRouter();
-  console.log(authenticated);
 
   useEffect(() => {
+    const authenticated = localStorage.getItem("userid");
+    setIsAuthenticated(authenticated);
     if (!authenticated) {
       router.push("/");
     }
   }, []);
-  return !authenticated ? (
-    <div>Redirecting... Please Log In</div>
+  return !isAutheticated ? (
+    <div>Redirecting... Please Wait</div>
   ) : (
     <div className="flex flex-col min-h-screen min-w-screen">
-      <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline w-full">
-        Go back to Home page
-      </button>
+      <Header />
 
-      <div className="flex-1 -mt-20">
+      <div className="flex-1">
         <InterviewForm />
       </div>
 

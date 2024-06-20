@@ -26,6 +26,7 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
+import { redirect, useRouter } from "next/navigation";
 
 interface ButtonOutlineProps {
   value: string;
@@ -57,6 +58,7 @@ export function ButtonWithIcon({ data }: LoginButtonProps) {
 }
 
 export const Header = () => {
+  const router = useRouter();
   const [isMenu, setIsMenu] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const handleMenu = () => {
@@ -91,6 +93,7 @@ export const Header = () => {
   const signOut = () => {
     localStorage.removeItem("userid");
     setIsLogin(false);
+    router.push("/");
   };
 
   useEffect(() => {
