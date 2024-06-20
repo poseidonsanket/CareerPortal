@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from "react";
 import Form from "@/components/Form";
 import Footer from "@/components/Footer";
-
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
 
@@ -14,6 +13,7 @@ const page = () => {
     const authenticated = localStorage.getItem("userid");
     setIsAuthenticated(authenticated);
     if (!authenticated) {
+      alert("please Log In")
       router.push("/");
     }
   }, []);

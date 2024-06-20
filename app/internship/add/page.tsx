@@ -13,6 +13,7 @@ const page = () => {
     const authenticated = localStorage.getItem("userid");
     setIsAuthenticated(authenticated);
     if (!authenticated) {
+      alert("please Log In")
       router.push("/");
     }
   }, []);
