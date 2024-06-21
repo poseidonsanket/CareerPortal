@@ -11,7 +11,6 @@ const InterviewForm = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const companyNameRef = useRef<HTMLInputElement>(null);
   const jobTitleRef = useRef<HTMLInputElement>(null);
-  const locationRef = useRef<HTMLInputElement>(null);
   const roundTitleRefs = useRef<HTMLInputElement[]>([]);
   const roundDescriptionRefs = useRef<HTMLTextAreaElement[]>([]);
   const verdictRef = useRef<HTMLSelectElement>(null);
@@ -26,7 +25,6 @@ const InterviewForm = () => {
     const formData = {
       companyName: companyNameRef.current?.value || "",
       jobTitle: jobTitleRef.current?.value || "",
-      location: locationRef.current?.value || "",
       rounds,
       verdict: verdictRef.current?.value || "",
     };
@@ -77,21 +75,6 @@ const InterviewForm = () => {
                 id="job-title"
                 type="text"
                 placeholder="Enter job title"
-                required
-              />
-            </div>
-          </div>
-          <div className="flex flex-wrap -mx-3 mb-6">
-            <div className="w-full px-3">
-              <label className="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">
-                Location
-              </label>
-              <input
-                ref={locationRef}
-                className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
-                id="location"
-                type="text"
-                placeholder="Enter location"
                 required
               />
             </div>
@@ -157,6 +140,7 @@ const InterviewForm = () => {
                 <option value="">Select verdict</option>
                 <option value="selected">Selected</option>
                 <option value="rejected">Rejected</option>
+                <option value="rejected">Pending</option>
               </select>
             </div>
           </div>
