@@ -19,7 +19,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import app from "../firebase";
+import app from "../utils/firebase";
 import {
   getAuth,
   signInWithPopup,
