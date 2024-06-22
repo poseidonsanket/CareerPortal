@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  FaBuilding,
-  FaMapMarkerAlt,
-  FaGraduationCap,
-} from "react-icons/fa";
+import { FaBuilding, FaMapMarkerAlt, FaGraduationCap } from "react-icons/fa";
 
 interface CardProps {
   companyName: string;
@@ -20,8 +16,10 @@ const Card: React.FC<CardProps> = ({
   batchEligible,
   jobLink,
 }) => {
+  console.log(companyName);
+  console.log(jobLink);
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8 min-w-80">
       <h2 className="text-2xl font-extrabold mb-4 flex items-center">
         <FaBuilding className="mr-2 text-blue-400" />
         {companyName}

@@ -1,7 +1,8 @@
-"use client"
+"use client";
 
 import React from "react";
 import { useRef } from "react";
+import { useInsertJob } from "@/hooks/useInsertJob";
 
 interface formProps {
   text: string;
@@ -18,17 +19,29 @@ const Form = (props: formProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    const userId = await localStorage.getItem("userid");
+
+    if (!userId) {
+      console.error("User ID not found in localStorage.");
+      return;
+    }
+
     const formData = {
-      companyName: companyNameRef.current?.value || "",
-      jobTitle: jobTitleRef.current?.value || "",
-      location: locationRef.current?.value || "",
-      batchEligible: batchEligibleRef.current?.value || "",
-      jobLink: jobLinkRef.current?.value || "",
+      companyName: companyNameRef.current?.value,
+      jobTitle: jobTitleRef.current?.value,
+      location: locationRef.current?.value,
+      batchEligible: batchEligibleRef.current?.value,
+      jobLink: jobLinkRef.current?.value,
+      userId: userId,
     };
 
-    console.log("Form data:", formData);
-    if (formRef.current) {
-      formRef.current.reset();
+    const data = await useInsertJob(formData);
+
+    if (data) {
+      console.log("data inserted successfully");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
     }
   };
 
