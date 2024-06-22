@@ -1,5 +1,7 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
+import { ReactNode } from "react";
 
 const defaultUrl = process.env.VERCEL_URL
   ? `https://${process.env.VERCEL_URL}`
@@ -14,12 +16,19 @@ export const metadata = {
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
 }) {
   return (
     <html lang="en" className={GeistSans.className}>
       <body className="">
-        <main className="">{children}</main>
+        <main className="">
+          <Toaster position="top-center" toastOptions={{
+            error: {
+              duration: 1600,
+            }
+          }}/>
+          {children}
+        </main>
       </body>
     </html>
   );
