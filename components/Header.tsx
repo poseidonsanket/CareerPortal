@@ -26,7 +26,10 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import HeaderDropDown from "./HeaderDropDown";
 
 interface ButtonOutlineProps {
   value: string;
@@ -61,11 +64,21 @@ export const Header = () => {
   const router = useRouter();
   const [isMenu, setIsMenu] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [photoUrl, setphotoUrl] = useState<string>("");
+  const [isComponentVisible, setIsComponentVisible] = useState(false);
   const handleMenu = () => {
     setIsMenu((isMenu) => !isMenu);
   };
   const closeMenu = () => {
     setIsMenu(false);
+  };
+
+  const handleMouseEnter = () => {
+    setIsComponentVisible(true);
+  };
+
+  const handleMouseLeave = () => {
+    setIsComponentVisible(false);
   };
 
   const signIn = () => {
@@ -78,8 +91,15 @@ export const Header = () => {
         const token = credential?.accessToken;
         const user = result.user;
         const email = result.user.email;
+        const photo = result.user.photoURL;
+        console.log(photo);
         const uid = result.user.uid;
         localStorage.setItem("userid", uid);
+        if (photo) {
+          localStorage.setItem("photo", photo);
+          setphotoUrl(photo);
+        }
+        toast.success("Login Successfull");
       })
       .catch((error) => {
         alert("Error logging in");
@@ -90,14 +110,28 @@ export const Header = () => {
       });
   };
 
-  const signOut = () => {
-    localStorage.removeItem("userid");
-    setIsLogin(false);
-    router.push("/");
-  };
+  async function handleSignOut() {
+    const auth = getAuth(app);
+    try {
+      await signOut(auth);
+      localStorage.removeItem("userid");
+      localStorage.removeItem("photo");
+      setIsLogin(false);
+      router.push("/");
+      toast.success("Signout Successfull");
+      setIsComponentVisible(false);
+    } catch (error: any) {
+      toast.error("Error");
+    }
+  }
 
   useEffect(() => {
     const userId = localStorage.getItem("userid");
+    const photo = localStorage.getItem("photo");
+    if (photo) {
+      setphotoUrl(photo);
+    }
+
     if (userId) {
       setIsLogin(true);
     }
@@ -153,9 +187,33 @@ export const Header = () => {
               </li>
             )}
             {isLogin && (
-              <li onClick={signOut}>
-                <ButtonWithIcon data="LogOut" />
-              </li>
+              <button
+                onMouseEnter={handleMouseEnter}
+                onMouseDownCapture={handleMouseLeave}
+              >
+                <Avatar
+                  className="mb-1"
+                  onMouseEnter={handleMouseEnter}
+                  onMouseDownCapture={handleMouseLeave}
+                >
+                  <AvatarImage src={photoUrl} />
+                  <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+              </button>
+            )}
+            {isComponentVisible && (
+              <div
+                style={{
+                  position: "absolute",
+                  top: "100%",
+                  right: 0,
+                  marginTop: "5px",
+                }}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+              >
+                <HeaderDropDown handleLogout={handleSignOut} />
+              </div>
             )}
           </ul>
         </div>
@@ -212,10 +270,24 @@ export const Header = () => {
               </li>
             )}
             {isLogin && (
-              <li onClick={signOut}>
+              <li onClick={handleSignOut}>
                 <ButtonWithIcon data="LogOut" />
               </li>
             )}
+            {isLogin && (
+              <li onClick={handleSignOut}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                  My Added Content
+                </button>
+              </li>
+            )}
+            {/* {isLogin && (
+              <li onClick={handleSignOut}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                  My Saved Content
+                </button>
+              </li>
+            )} */}
           </ul>
         </div>
       )}
