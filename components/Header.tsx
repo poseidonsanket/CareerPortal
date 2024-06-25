@@ -11,14 +11,6 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { MdOutlineClose } from "react-icons/md";
 import { useEffect, useState } from "react";
 import { Mail } from "lucide-react";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-} from "@/components/ui/navigation-menu";
 import app from "../utils/firebase";
 import {
   getAuth,
@@ -87,19 +79,18 @@ export const Header = () => {
     const provider = new GoogleAuthProvider();
     signInWithPopup(auth, provider)
       .then((result) => {
-        setIsLogin(true);
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential?.accessToken;
         const user = result.user;
         const email = result.user.email;
         const photo = result.user.photoURL;
-        console.log(photo);
         const uid = result.user.uid;
         localStorage.setItem("userid", uid);
         if (photo) {
           localStorage.setItem("photo", photo);
           setphotoUrl(photo);
         }
+        setIsLogin(true);
         toast.success("Login Successfull");
       })
       .catch((error) => {
@@ -119,23 +110,27 @@ export const Header = () => {
       localStorage.removeItem("photo");
       setIsLogin(false);
       router.push("/");
-      toast.success("Signout Successfull");
       setIsComponentVisible(false);
+      toast.success("Signout Successfull");
     } catch (error: any) {
       toast.error("Error");
     }
   }
 
   useEffect(() => {
-    const userId = localStorage.getItem("userid");
-    const photo = localStorage.getItem("photo");
-    if (photo) {
-      setphotoUrl(photo);
+    async function getData() {
+      const userId = localStorage.getItem("userid");
+      const photo = localStorage.getItem("photo");
+      if (photo) {
+        setphotoUrl(photo);
+      }
+
+      if (userId) {
+        setIsLogin(true);
+      }
     }
 
-    if (userId) {
-      setIsLogin(true);
-    }
+    getData();
   }, []);
 
   return (
@@ -182,12 +177,7 @@ export const Header = () => {
                 </PopoverContent>
               </Popover>
             </li>
-            {!isLogin && (
-              <li onClick={signIn}>
-                <ButtonWithIcon data="Login with Gmail" />
-              </li>
-            )}
-            {isLogin && (
+            {isLogin ? (
               <button
                 onMouseEnter={handleMouseEnter}
                 onMouseDownCapture={handleMouseLeave}
@@ -201,6 +191,10 @@ export const Header = () => {
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </button>
+            ) : (
+              <li onClick={signIn}>
+                <ButtonWithIcon data="Login with Gmail" />
+              </li>
             )}
             {isComponentVisible && (
               <div
@@ -219,79 +213,14 @@ export const Header = () => {
           </ul>
         </div>
       </div>
-      {isMenu && <MobileNav handleMenu={handleMenu} signIn={signIn} isLogin={isLogin} handleSignOut={handleSignOut}/>
-        // <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
-        //   <ul className="flex flex-col justify-center items-center gap-10 pt-10">
-        //     <li onClick={handleMenu}>
-        //       <Link href="/internship">Internships</Link>
-        //     </li>
-        //     <li onClick={handleMenu}>
-        //       <Link href="/job">Jobs</Link>
-        //     </li>
-        //     <li onClick={handleMenu}>
-        //       <Link href="/interview">Interviews</Link>
-        //     </li>
-        //     <li>
-        //       <NavigationMenu>
-        //         <NavigationMenuList>
-        //           <NavigationMenuItem>
-        //             <NavigationMenuTrigger className="text-xl">
-        //               Add Content
-        //             </NavigationMenuTrigger>
-        //             <NavigationMenuContent className="w-[167px] flex-col">
-        //               <div className="bg-inherit">
-        //                 <NavigationMenuLink className="" onClick={handleMenu}>
-        //                   <ButtonOutline value={"Add Jobs"} href={"/job/add"} />
-        //                 </NavigationMenuLink>
-        //               </div>
-        //               <div>
-        //                 <NavigationMenuLink className="" onClick={handleMenu}>
-        //                   <ButtonOutline
-        //                     value={"Add Internships"}
-        //                     href={"/internship/add"}
-        //                   />
-        //                 </NavigationMenuLink>
-        //               </div>
-        //               <div>
-        //                 <NavigationMenuLink className="" onClick={handleMenu}>
-        //                   <ButtonOutline
-        //                     value={"Add Experience"}
-        //                     href={"/interview/add"}
-        //                   />
-        //                 </NavigationMenuLink>
-        //               </div>
-        //             </NavigationMenuContent>
-        //           </NavigationMenuItem>
-        //         </NavigationMenuList>
-        //       </NavigationMenu>
-        //     </li>
-        //     {!isLogin && (
-        //       <li onClick={signIn}>
-        //         <ButtonWithIcon data="Login with Gmail" />
-        //       </li>
-        //     )}
-        //     {isLogin && (
-        //       <li onClick={handleSignOut}>
-        //         <ButtonWithIcon data="LogOut" />
-        //       </li>
-        //     )}
-        //     {isLogin && (
-        //       <li onClick={handleSignOut}>
-        //         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-        //           My Added Content
-        //         </button>
-        //       </li>
-        //     )}
-        //     {/* {isLogin && (
-        //       <li onClick={handleSignOut}>
-        //         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-        //           My Saved Content
-        //         </button>
-        //       </li>
-        //     )} */}
-        //   </ul>
-        // </div>
-      }
+      {isMenu && (
+        <MobileNav
+          handleMenu={handleMenu}
+          signIn={signIn}
+          isLogin={isLogin}
+          handleSignOut={handleSignOut}
+        />
+      )}
     </div>
   );
 };
