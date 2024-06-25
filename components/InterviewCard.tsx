@@ -54,12 +54,12 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
         {verdictIcon}
         Verdict: {verdictText}
       </div>
-      <div className="text-left mt-4">
+      <div className="text-left mt-4 -z-100">
         <a
           href={readMoreLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105 inline-flex items-center"
+          className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           <FaExternalLinkAlt className="mr-2" />
           View Details

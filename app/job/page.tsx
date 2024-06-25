@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React from "react";
 import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -9,13 +9,6 @@ const index = () => {
   const { jobs, isJobs } = useGetJobs();
   console.log(jobs[0]);
   console.log(isJobs);
-  const dummyData = {
-    companyName: "Example Inc.",
-    jobTitle: "Software Engineer",
-    location: "New York, NY",
-    batchEligible: "2024 Graduates",
-    jobLink: "https://example.com/job",
-  };
   return !isJobs ? (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />

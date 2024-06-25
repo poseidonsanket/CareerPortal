@@ -30,6 +30,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import HeaderDropDown from "./HeaderDropDown";
+import MobileNav from "./MobileNav";
 
 interface ButtonOutlineProps {
   value: string;
@@ -218,79 +219,79 @@ export const Header = () => {
           </ul>
         </div>
       </div>
-      {isMenu && (
-        <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
-          <ul className="flex flex-col justify-center items-center gap-10 pt-10">
-            <li onClick={handleMenu}>
-              <Link href="/internship">Internships</Link>
-            </li>
-            <li onClick={handleMenu}>
-              <Link href="/job">Jobs</Link>
-            </li>
-            <li onClick={handleMenu}>
-              <Link href="/interview">Interviews</Link>
-            </li>
-            <li>
-              <NavigationMenu>
-                <NavigationMenuList>
-                  <NavigationMenuItem>
-                    <NavigationMenuTrigger className="text-xl">
-                      Add Content
-                    </NavigationMenuTrigger>
-                    <NavigationMenuContent className="w-[167px] flex-col">
-                      <div className="bg-inherit">
-                        <NavigationMenuLink className="" onClick={handleMenu}>
-                          <ButtonOutline value={"Add Jobs"} href={"/job/add"} />
-                        </NavigationMenuLink>
-                      </div>
-                      <div>
-                        <NavigationMenuLink className="" onClick={handleMenu}>
-                          <ButtonOutline
-                            value={"Add Internships"}
-                            href={"/internship/add"}
-                          />
-                        </NavigationMenuLink>
-                      </div>
-                      <div>
-                        <NavigationMenuLink className="" onClick={handleMenu}>
-                          <ButtonOutline
-                            value={"Add Experience"}
-                            href={"/interview/add"}
-                          />
-                        </NavigationMenuLink>
-                      </div>
-                    </NavigationMenuContent>
-                  </NavigationMenuItem>
-                </NavigationMenuList>
-              </NavigationMenu>
-            </li>
-            {!isLogin && (
-              <li onClick={signIn}>
-                <ButtonWithIcon data="Login with Gmail" />
-              </li>
-            )}
-            {isLogin && (
-              <li onClick={handleSignOut}>
-                <ButtonWithIcon data="LogOut" />
-              </li>
-            )}
-            {isLogin && (
-              <li onClick={handleSignOut}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                  My Added Content
-                </button>
-              </li>
-            )}
-            {/* {isLogin && (
-              <li onClick={handleSignOut}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                  My Saved Content
-                </button>
-              </li>
-            )} */}
-          </ul>
-        </div>
-      )}
+      {isMenu && <MobileNav handleMenu={handleMenu} signIn={signIn} isLogin={isLogin} handleSignOut={handleSignOut}/>
+        // <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
+        //   <ul className="flex flex-col justify-center items-center gap-10 pt-10">
+        //     <li onClick={handleMenu}>
+        //       <Link href="/internship">Internships</Link>
+        //     </li>
+        //     <li onClick={handleMenu}>
+        //       <Link href="/job">Jobs</Link>
+        //     </li>
+        //     <li onClick={handleMenu}>
+        //       <Link href="/interview">Interviews</Link>
+        //     </li>
+        //     <li>
+        //       <NavigationMenu>
+        //         <NavigationMenuList>
+        //           <NavigationMenuItem>
+        //             <NavigationMenuTrigger className="text-xl">
+        //               Add Content
+        //             </NavigationMenuTrigger>
+        //             <NavigationMenuContent className="w-[167px] flex-col">
+        //               <div className="bg-inherit">
+        //                 <NavigationMenuLink className="" onClick={handleMenu}>
+        //                   <ButtonOutline value={"Add Jobs"} href={"/job/add"} />
+        //                 </NavigationMenuLink>
+        //               </div>
+        //               <div>
+        //                 <NavigationMenuLink className="" onClick={handleMenu}>
+        //                   <ButtonOutline
+        //                     value={"Add Internships"}
+        //                     href={"/internship/add"}
+        //                   />
+        //                 </NavigationMenuLink>
+        //               </div>
+        //               <div>
+        //                 <NavigationMenuLink className="" onClick={handleMenu}>
+        //                   <ButtonOutline
+        //                     value={"Add Experience"}
+        //                     href={"/interview/add"}
+        //                   />
+        //                 </NavigationMenuLink>
+        //               </div>
+        //             </NavigationMenuContent>
+        //           </NavigationMenuItem>
+        //         </NavigationMenuList>
+        //       </NavigationMenu>
+        //     </li>
+        //     {!isLogin && (
+        //       <li onClick={signIn}>
+        //         <ButtonWithIcon data="Login with Gmail" />
+        //       </li>
+        //     )}
+        //     {isLogin && (
+        //       <li onClick={handleSignOut}>
+        //         <ButtonWithIcon data="LogOut" />
+        //       </li>
+        //     )}
+        //     {isLogin && (
+        //       <li onClick={handleSignOut}>
+        //         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+        //           My Added Content
+        //         </button>
+        //       </li>
+        //     )}
+        //     {/* {isLogin && (
+        //       <li onClick={handleSignOut}>
+        //         <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+        //           My Saved Content
+        //         </button>
+        //       </li>
+        //     )} */}
+        //   </ul>
+        // </div>
+      }
     </div>
   );
 };
