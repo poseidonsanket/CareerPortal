@@ -2,7 +2,8 @@
 
 import React from "react";
 import { useRef } from "react";
-import { useInsertJob } from "@/hooks/useInsertJob";
+import axios from "axios";
+import toast from "react-hot-toast";
 
 interface formProps {
   text: string;
@@ -35,10 +36,17 @@ const Form = (props: formProps) => {
       userId: userId,
     };
 
-    const data = await useInsertJob(formData);
+    const data = await axios.post("http://localhost:3000/api/getJobs",formData);
+    console.log(data.data.msg);
 
-    if (data) {
-      console.log("data inserted successfully");
+    if (data.data.msg === true) {
+      toast.success("Data inserted successfully");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    }
+    else{
+      toast.error("Cannot Insert Data");
       if (formRef.current) {
         formRef.current.reset();
       }
