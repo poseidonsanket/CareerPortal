@@ -9,7 +9,7 @@ const page = () => {
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
-        <div className="grid grid-cols-5">
+        <div className="lg:grid lg:grid-cols-4">
           <InterviewCard
             companyName="XYZ Company"
             position="Senior Developer"

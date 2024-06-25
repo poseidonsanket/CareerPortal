@@ -1,5 +1,12 @@
-import React from "react";
-import { FaBuilding, FaMapMarkerAlt, FaGraduationCap } from "react-icons/fa";
+"use client";
+import React, { useState } from "react";
+import {
+  FaBuilding,
+  FaMapMarkerAlt,
+  FaGraduationCap,
+  FaBookmark,
+  FaRegBookmark,
+} from "react-icons/fa";
 
 interface CardProps {
   companyName: string;
@@ -16,10 +23,24 @@ const Card: React.FC<CardProps> = ({
   batchEligible,
   jobLink,
 }) => {
-  console.log(companyName);
-  console.log(jobLink);
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSaveClick = () => {
+    setIsSaved(!isSaved);
+  };
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8 min-w-80">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">
+      <div className="flex justify-between">
+        <div>{" "}</div>
+        <div className="flex flex-end" onClick={handleSaveClick}>
+          {isSaved ? (
+            <FaBookmark className="text-white-400 text-xl" />
+          ) : (
+            <FaRegBookmark className="text-gray-400 text-xl" />
+          )}
+        </div>
+      </div>
+
       <h2 className="text-2xl font-extrabold mb-4 flex items-center">
         <FaBuilding className="mr-2 text-blue-400" />
         {companyName}

@@ -16,7 +16,7 @@ const page = () => {
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
-        <div className="grid grid-cols-4">
+        <div className="lg:grid lg:grid-cols-4">
           <Card
             companyName={dummyData.companyName}
             jobTitle={dummyData.jobTitle}

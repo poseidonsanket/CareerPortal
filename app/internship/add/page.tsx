@@ -25,7 +25,7 @@ const page = () => {
       <Header />
 
       <div className="flex-1">
-        <Form text={"Internship"} />;
+        <Form text={"Internship"} />
       </div>
 
       <Footer />

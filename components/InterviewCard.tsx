@@ -1,10 +1,13 @@
-import React from "react";
+"use client";
+import React, { useState } from "react";
 import {
   FaBuilding,
   FaCheckCircle,
   FaTimesCircle,
   FaExternalLinkAlt,
-  FaClock
+  FaClock,
+  FaBookmark,
+  FaRegBookmark,
 } from "react-icons/fa";
 
 interface InterviewCardProps {
@@ -20,6 +23,11 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   verdict,
   readMoreLink,
 }) => {
+  const [isSaved, setIsSaved] = useState(false);
+
+  const handleSaveClick = () => {
+    setIsSaved(!isSaved);
+  };
   let verdictIcon;
   let verdictText;
   let verdictColorClass;
@@ -44,7 +52,17 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   }
 
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8 min-w-80 lg:mx-auto mx-10">
+      <div className="flex justify-between">
+        <div> </div>
+        <div className="flex flex-end" onClick={handleSaveClick}>
+          {isSaved ? (
+            <FaBookmark className="text-white-400 text-xl" />
+          ) : (
+            <FaRegBookmark className="text-gray-400 text-xl" />
+          )}
+        </div>
+      </div>
       <h2 className="text-2xl font-extrabold mb-4 flex items-center">
         <FaBuilding className="mr-2" />
         {companyName}

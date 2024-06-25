@@ -83,13 +83,13 @@ const MobileNav = ({handleMenu,signIn,handleSignOut,isLogin}: any) => {
           </button>
         </li>
       )}
-      {/* {isLogin && (
+      {isLogin && (
         <li onClick={handleSignOut}>
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
             My Saved Content
           </button>
         </li>
-      )} */}
+      )}
     </ul>
   </div>
   )
