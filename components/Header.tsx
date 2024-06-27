@@ -138,7 +138,9 @@ export const Header = () => {
         setphotoUrl(photo);
       }
 
-      setIsLogin(true);
+      if (userId) {
+        setIsLogin(true);
+      }
     }
 
     getData();
