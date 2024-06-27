@@ -22,7 +22,14 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import HeaderDropDown from "./HeaderDropDown";
-import MobileNav from "./MobileNav";
+import {
+  NavigationMenu,
+  NavigationMenuItem,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  NavigationMenuContent,
+  NavigationMenuLink,
+} from "@radix-ui/react-navigation-menu";
 
 interface ButtonOutlineProps {
   value: string;
@@ -86,11 +93,15 @@ export const Header = () => {
         const photo = result.user.photoURL;
         const uid = result.user.uid;
         localStorage.setItem("userid", uid);
+
         if (photo) {
-          localStorage.setItem("photo", photo);
           setphotoUrl(photo);
+          localStorage.setItem("photo", photo);
         }
+        console.log(photoUrl);
+
         setIsLogin(true);
+        setIsMenu(false);
         toast.success("Login Successfull");
       })
       .catch((error) => {
@@ -112,6 +123,7 @@ export const Header = () => {
       router.push("/");
       setIsComponentVisible(false);
       toast.success("Signout Successfull");
+      setIsMenu(false);
     } catch (error: any) {
       toast.error("Error");
     }
@@ -121,13 +133,12 @@ export const Header = () => {
     async function getData() {
       const userId = localStorage.getItem("userid");
       const photo = localStorage.getItem("photo");
+
       if (photo) {
         setphotoUrl(photo);
       }
 
-      if (userId) {
-        setIsLogin(true);
-      }
+      setIsLogin(true);
     }
 
     getData();
@@ -188,7 +199,9 @@ export const Header = () => {
                   onMouseDownCapture={handleMouseLeave}
                 >
                   <AvatarImage src={photoUrl} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback>
+                    <img src="https://imgs.search.brave.com/yf85zFfWTRq2HlnErMApopfO32Hpc5a6aK0haacPzPk/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9pLnNz/dGF0aWMubmV0L2Zy/bElmLnBuZw" />
+                  </AvatarFallback>
                 </Avatar>
               </button>
             ) : (
@@ -214,12 +227,79 @@ export const Header = () => {
         </div>
       </div>
       {isMenu && (
-        <MobileNav
-          handleMenu={handleMenu}
-          signIn={signIn}
-          isLogin={isLogin}
-          handleSignOut={handleSignOut}
-        />
+        <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
+          <ul className="flex flex-col justify-center items-center gap-10 pt-10">
+            <li onClick={handleMenu}>
+              <Link href="/internship">Internships</Link>
+            </li>
+            <li onClick={handleMenu}>
+              <Link href="/job">Jobs</Link>
+            </li>
+            <li onClick={handleMenu}>
+              <Link href="/interview">Interviews</Link>
+            </li>
+            <li>
+              <NavigationMenu>
+                <NavigationMenuList>
+                  <NavigationMenuItem>
+                    <NavigationMenuTrigger className="text-xl">
+                      Add Content
+                    </NavigationMenuTrigger>
+                    <NavigationMenuContent className="w-[167px] flex-col">
+                      <div className="bg-inherit">
+                        <NavigationMenuLink className="" onClick={handleMenu}>
+                          <ButtonOutline value={"Add Jobs"} href={"/job/add"} />
+                        </NavigationMenuLink>
+                      </div>
+                      <div>
+                        <NavigationMenuLink className="" onClick={handleMenu}>
+                          <ButtonOutline
+                            value={"Add Internships"}
+                            href={"/internship/add"}
+                          />
+                        </NavigationMenuLink>
+                      </div>
+                      <div>
+                        <NavigationMenuLink className="" onClick={handleMenu}>
+                          <ButtonOutline
+                            value={"Add Experience"}
+                            href={"/interview/add"}
+                          />
+                        </NavigationMenuLink>
+                      </div>
+                    </NavigationMenuContent>
+                  </NavigationMenuItem>
+                </NavigationMenuList>
+              </NavigationMenu>
+            </li>
+            {!isLogin && (
+              <li onClick={signIn}>
+                <ButtonWithIcon data="Login with Gmail" />
+              </li>
+            )}
+            {isLogin && (
+              <li onClick={handleSignOut}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                  My Added Content
+                </button>
+              </li>
+            )}
+            {isLogin && (
+              <li onClick={handleSignOut}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                  My Saved Content
+                </button>
+              </li>
+            )}
+            {isLogin && (
+              <li onClick={handleSignOut}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                  Logout
+                </button>
+              </li>
+            )}
+          </ul>
+        </div>
       )}
     </div>
   );
