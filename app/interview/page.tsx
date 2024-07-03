@@ -1,39 +1,52 @@
+"use client";
 import Footer from "@/components/Footer";
 import { Header } from "@/components/Header";
 import InterviewCard from "@/components/InterviewCard";
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+
+interface interviews {
+  companyname: string;
+  jobtitle: string;
+  verdict: string;
+  id: number;
+}
 
 const page = () => {
-  return (
+  const [loading, setLoading] = useState(true);
+  const [interviews, setInterviews] = useState<interviews[]>([]);
+
+  useEffect(() => {
+    async function getInterviews() {
+      const response = await axios.get(
+        "http://localhost:3000/api/getInterviews"
+      );
+      setLoading(false);
+      setInterviews(response.data.Interviews);
+    }
+    getInterviews();
+  }, []);
+  return loading ? (
+    <div className="flex flex-col min-h-screen min-w-screen">
+      <Header />
+      <div className="flex-1 mt-20">Loading</div>
+      <Footer />
+    </div>
+  ) : (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          <InterviewCard
-            companyName="XYZ Company"
-            position="Senior Developer"
-            verdict="Rejected"
-            readMoreLink="https://example.com/interview-details"
-          />
-          <InterviewCard
-            companyName="XYZ Company"
-            position="Senior Developer"
-            verdict="Pending"
-            readMoreLink="https://example.com/interview-details"
-          />
-          <InterviewCard
-            companyName="XYZ Company"
-            position="Senior Developer"
-            verdict="Selected"
-            readMoreLink="https://example.com/interview-details"
-          />
-          <InterviewCard
-            companyName="XYZ Company"
-            position="Senior Developer"
-            verdict="Selected"
-            readMoreLink="https://example.com/interview-details"
-          />
+          {interviews?.map((inter) => (
+            <InterviewCard
+              key={inter.id}
+              companyName={inter.companyname}
+              position={inter.jobtitle}
+              verdict={inter.verdict}
+              readMoreLink="https://example.com/interview-details"
+            />
+          ))}
         </div>
       </div>
 

@@ -25,7 +25,7 @@ const page = () => {
         "http://localhost:3000/api/getInternships"
       );
       setLoading(false);
-      setInts(response.data.Jobs);
+      setInts(response.data.Internships);
     }
     getInternships();
   }, []);

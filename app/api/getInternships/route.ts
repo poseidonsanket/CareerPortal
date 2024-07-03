@@ -5,7 +5,7 @@ export async function GET() {
   const { data, error } = await supabase.from("internships").select();
 
   return Response.json({
-    Jobs: data,
+    Internships: data,
   });
 }
 

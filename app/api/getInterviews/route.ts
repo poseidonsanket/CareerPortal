@@ -1,15 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 import { supabase } from "@/utils/supabase";
 
-interface intData {
-  id: Number
-}
 export async function POST(req: NextRequest) {
   const data = await req.json();
   const { companyName, jobTitle, rounds, verdict } = data;
 
   try {
-    const { data , error } = await supabase
+    const { data, error } = await supabase
       .from("interviews")
       .insert({
         companyname: companyName,
@@ -34,4 +31,12 @@ export async function POST(req: NextRequest) {
       msg: false,
     });
   }
+}
+
+export async function GET() {
+  const { data, error } = await supabase.from("interviews").select();
+
+  return Response.json({
+    Interviews: data,
+  });
 }

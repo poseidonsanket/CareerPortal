@@ -13,7 +13,7 @@ import {
 interface InterviewCardProps {
   companyName: string;
   position: string;
-  verdict: "Selected" | "Rejected" | "Pending";
+  verdict: string;
   readMoreLink: string;
 }
 
