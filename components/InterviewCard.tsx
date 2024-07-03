@@ -14,14 +14,14 @@ interface InterviewCardProps {
   companyName: string;
   position: string;
   verdict: string;
-  readMoreLink: string;
+  id: number,
 }
 
 const InterviewCard: React.FC<InterviewCardProps> = ({
   companyName,
   position,
   verdict,
-  readMoreLink,
+  id,
 }) => {
   const [isSaved, setIsSaved] = useState(false);
 
@@ -73,15 +73,12 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
         Verdict: {verdictText}
       </div>
       <div className="text-left mt-4 -z-100">
-        <a
-          href={readMoreLink}
-          target="_blank"
-          rel="noopener noreferrer"
+        <button
           className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         >
           <FaExternalLinkAlt className="mr-2" />
           View Details
-        </a>
+        </button>
       </div>
     </div>
   );

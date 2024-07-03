@@ -29,7 +29,11 @@ const page = () => {
   return loading ? (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
-      <div className="flex-1 mt-20">Loading</div>
+
+      <div className="flex-1 flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+
       <Footer />
     </div>
   ) : (
@@ -44,7 +48,7 @@ const page = () => {
               companyName={inter.companyname}
               position={inter.jobtitle}
               verdict={inter.verdict}
-              readMoreLink="https://example.com/interview-details"
+              id={inter.id}
             />
           ))}
         </div>

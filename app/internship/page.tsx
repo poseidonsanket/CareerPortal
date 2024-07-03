@@ -29,17 +29,14 @@ const page = () => {
     }
     getInternships();
   }, []);
-  const dummyData = {
-    companyName: "Example Inc.",
-    jobTitle: "Software Engineer",
-    location: "New York, NY",
-    batchEligible: "2024 Graduates",
-    jobLink: "https://example.com/job",
-  };
   return loading ? (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
-      <div className="flex-1 mt-20">Loading</div>
+
+      <div className="flex-1 flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+
       <Footer />
     </div>
   ) : (

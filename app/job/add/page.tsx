@@ -4,7 +4,7 @@ import Form from "@/components/Form";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/navigation";
 import { Header } from "@/components/Header";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 const page = () => {
   const [isAutheticated, setIsAuthenticated] = useState<string | null>(null);
@@ -14,13 +14,15 @@ const page = () => {
     const authenticated = localStorage.getItem("userid");
     setIsAuthenticated(authenticated);
     if (!authenticated) {
-      toast.error('Please Log In');
+      toast.error("Please Log In");
       router.push("/");
     }
   }, []);
 
   return !isAutheticated ? (
-    <div>Redirecting... Please Wait</div>
+    <div className="flex-1 flex justify-center items-center h-screen">
+      <div className="loader"></div>
+    </div>
   ) : (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
