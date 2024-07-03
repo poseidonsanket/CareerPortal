@@ -1,5 +1,7 @@
 "use client";
+import axios from "axios";
 import React, { useState, useRef, FormEvent } from "react";
+import toast from "react-hot-toast";
 
 interface Round {
   title: string;
@@ -15,7 +17,7 @@ const InterviewForm = () => {
   const roundDescriptionRefs = useRef<HTMLTextAreaElement[]>([]);
   const verdictRef = useRef<HTMLSelectElement>(null);
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const rounds = roundTitleRefs.current.map((_, index) => ({
       title: roundTitleRefs.current[index]?.value || "",
@@ -29,9 +31,20 @@ const InterviewForm = () => {
       verdict: verdictRef.current?.value || "",
     };
 
-    console.log("Form data:", formData);
-    if (formRef.current) {
-      formRef.current.reset();
+    const data = await axios.post("http://localhost:3000/api/getInterviews",formData);
+
+
+    if (data.data.msg === true) {
+      toast.success("Data inserted successfully");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    }
+    else{
+      toast.error("Cannot Insert Data");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
     }
   };
 

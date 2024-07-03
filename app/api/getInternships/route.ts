@@ -2,7 +2,7 @@ import { supabase } from "@/utils/supabase";
 import { NextRequest } from "next/server";
 
 export async function GET() {
-  const { data, error } = await supabase.from("jobs").select();
+  const { data, error } = await supabase.from("internships").select();
 
   return Response.json({
     Jobs: data,
@@ -11,15 +11,15 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
-  const { companyName, jobLink, jobTitle, location, userId, batchEligible } =
+  const { companyName, intLink, intTitle, location, userId, batchEligible } =
     data;
 
-  const { error } = await supabase.from("jobs").insert({
+  const { error } = await supabase.from("internships").insert({
     companyname: companyName,
-    jobtitle: jobTitle,
+    inttitle: intTitle,
     location: location,
     batcheligible: batchEligible,
-    joblink: jobLink,
+    intlink: intLink,
     userid: userId,
   });
 

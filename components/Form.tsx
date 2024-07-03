@@ -37,7 +37,43 @@ const Form = (props: formProps) => {
     };
 
     const data = await axios.post("http://localhost:3000/api/getJobs",formData);
-    console.log(data.data.msg);
+
+    if (data.data.msg === true) {
+      toast.success("Data inserted successfully");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    }
+    else{
+      toast.error("Cannot Insert Data");
+      if (formRef.current) {
+        formRef.current.reset();
+      }
+    }
+  };
+
+
+  const handleIntSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const userId = await localStorage.getItem("userid");
+
+    if (!userId) {
+      console.error("User ID not found in localStorage.");
+      return;
+    }
+
+    const formData = {
+      companyName: companyNameRef.current?.value,
+      intTitle: jobTitleRef.current?.value,
+      location: locationRef.current?.value,
+      batchEligible: batchEligibleRef.current?.value,
+      intLink: jobLinkRef.current?.value,
+      userId: userId,
+    };
+
+    const data = await axios.post("http://localhost:3000/api/getInternships",formData);
+
 
     if (data.data.msg === true) {
       toast.success("Data inserted successfully");
@@ -57,7 +93,7 @@ const Form = (props: formProps) => {
   return (
     <div className="bg-gray-900 text-white mx-4 mt-40 md:mt-40 mb-10">
       <div className="flex justify-center items-center mt-20">
-        <form className="w-full max-w-lg" onSubmit={handleSubmit} ref={formRef}>
+        <form className="w-full max-w-lg" onSubmit={text === "Job" ? handleSubmit : handleIntSubmit} ref={formRef}>
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
               <label className="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">

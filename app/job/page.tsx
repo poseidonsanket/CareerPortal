@@ -22,7 +22,6 @@ const index = () => {
   useEffect(() => {
     async function getJobs() {
       const response = await axios.get("http://localhost:3000/api/getJobs");
-      console.log(response.data.Jobs);
       setLoading(false);
       setJobs(response.data.Jobs);
     }

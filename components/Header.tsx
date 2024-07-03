@@ -98,7 +98,7 @@ export const Header = () => {
           setphotoUrl(photo);
           localStorage.setItem("photo", photo);
         }
-        console.log(photoUrl);
+
 
         setIsLogin(true);
         setIsMenu(false);
