@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
         jobtitle: jobTitle,
         verdict: verdict,
       })
-      .select("id");
+      .select('id');
 
     for (let i: number = 0; i < rounds.length; i++) {
       const { error } = await supabase.from("rounds").insert({

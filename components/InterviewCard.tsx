@@ -9,12 +9,13 @@ import {
   FaBookmark,
   FaRegBookmark,
 } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface InterviewCardProps {
   companyName: string;
   position: string;
   verdict: string;
-  id: number,
+  id: number;
 }
 
 const InterviewCard: React.FC<InterviewCardProps> = ({
@@ -24,6 +25,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   id,
 }) => {
   const [isSaved, setIsSaved] = useState(false);
+  const router = useRouter();
 
   const handleSaveClick = () => {
     setIsSaved(!isSaved);
@@ -33,17 +35,17 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   let verdictColorClass;
 
   switch (verdict) {
-    case "Selected":
+    case "selected":
       verdictIcon = <FaCheckCircle className="text-green-500 mr-2" />;
       verdictText = "Selected";
       verdictColorClass = "text-green-500";
       break;
-    case "Rejected":
+    case "rejected":
       verdictIcon = <FaTimesCircle className="text-red-500 mr-2" />;
       verdictText = "Rejected";
       verdictColorClass = "text-red-500";
       break;
-    case "Pending":
+    case "pending":
     default:
       verdictIcon = <FaClock className="text-yellow-400 mr-2" />;
       verdictText = "Pending";
@@ -73,9 +75,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
         Verdict: {verdictText}
       </div>
       <div className="text-left mt-4 -z-100">
-        <button
-          className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
+        <button className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => router.push(`/interview/${id}`)}>
           <FaExternalLinkAlt className="mr-2" />
           View Details
         </button>
