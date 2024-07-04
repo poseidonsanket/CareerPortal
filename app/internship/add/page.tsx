@@ -19,7 +19,9 @@ const page = () => {
     }
   }, []);
   return !isAutheticated ? (
-    <div>Redirecting... Please Wait</div>
+    <div className="flex-1 flex justify-center items-center h-screen">
+        <div className="loader"></div>
+      </div>
   ) : (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />

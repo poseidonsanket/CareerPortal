@@ -16,6 +16,7 @@ interface InterviewCardProps {
   position: string;
   verdict: string;
   id: number;
+  link: string;
 }
 
 const InterviewCard: React.FC<InterviewCardProps> = ({
@@ -23,6 +24,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   position,
   verdict,
   id,
+  link,
 }) => {
   const [isSaved, setIsSaved] = useState(false);
   const router = useRouter();
@@ -54,7 +56,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   }
 
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mx-auto mt-8 min-w-80 lg:mx-auto mx-10">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">
       <div className="flex justify-between">
         <div> </div>
         <div className="flex flex-end" onClick={handleSaveClick}>
@@ -75,10 +77,24 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
         Verdict: {verdictText}
       </div>
       <div className="text-left mt-4 -z-100">
-        <button className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={() => router.push(`/interview/${id}`)}>
-          <FaExternalLinkAlt className="mr-2" />
-          View Details
-        </button>
+        {link ? (
+          <a
+            className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            href={link}
+            target="_blank"
+          >
+            <FaExternalLinkAlt className="mr-2" />
+            View Details
+          </a>
+        ) : (
+          <button
+            className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            onClick={() => router.push(`/interview/${id}`)}
+          >
+            <FaExternalLinkAlt className="mr-2" />
+            View Details
+          </button>
+        )}
       </div>
     </div>
   );

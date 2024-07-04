@@ -3,7 +3,7 @@ import { supabase } from "@/utils/supabase";
 
 export async function POST(req: NextRequest) {
   const data = await req.json();
-  const { companyName, jobTitle, rounds, verdict } = data;
+  const { companyName, jobTitle, rounds, verdict, link } = data;
 
   try {
     const { data, error } = await supabase
@@ -12,8 +12,9 @@ export async function POST(req: NextRequest) {
         companyname: companyName,
         jobtitle: jobTitle,
         verdict: verdict,
+        link: link,
       })
-      .select('id');
+      .select("id");
 
     for (let i: number = 0; i < rounds.length; i++) {
       const { error } = await supabase.from("rounds").insert({

@@ -10,6 +10,7 @@ interface interviews {
   jobtitle: string;
   verdict: string;
   id: number;
+  link: string;
 }
 
 const page = () => {
@@ -49,6 +50,7 @@ const page = () => {
               position={inter.jobtitle}
               verdict={inter.verdict}
               id={inter.id}
+              link={inter.link}
             />
           ))}
         </div>
