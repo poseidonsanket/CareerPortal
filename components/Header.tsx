@@ -81,6 +81,10 @@ export const Header = () => {
     setIsComponentVisible(false);
   };
 
+  const handleMyPosts = () => {
+    router.push("/myposts");
+  };
+
   const signIn = () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -98,7 +102,6 @@ export const Header = () => {
           setphotoUrl(photo);
           localStorage.setItem("photo", photo);
         }
-
 
         setIsLogin(true);
         setIsMenu(false);
@@ -222,7 +225,10 @@ export const Header = () => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <HeaderDropDown handleLogout={handleSignOut} />
+                <HeaderDropDown
+                  handleLogout={handleSignOut}
+                  handleMyPosts={handleMyPosts}
+                />
               </div>
             )}
           </ul>
@@ -280,7 +286,7 @@ export const Header = () => {
               </li>
             )}
             {isLogin && (
-              <li onClick={handleSignOut}>
+              <li onClick={handleMyPosts}>
                 <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
                   My Added Content
                 </button>

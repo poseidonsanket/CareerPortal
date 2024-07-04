@@ -82,6 +82,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
             className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             href={link}
             target="_blank"
+            rel="noopener noreferrer"
           >
             <FaExternalLinkAlt className="mr-2" />
             View Details

@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import React, { useState, useRef, FormEvent } from "react";
 import toast from "react-hot-toast";
 
@@ -9,6 +10,7 @@ interface Round {
 }
 
 const InterviewForm = () => {
+  const router = useRouter();
   const [numRounds, setNumRounds] = useState<number>(1);
   const [showLinkInput, setShowLinkInput] = useState<boolean>(false);
   const formRef = useRef<HTMLFormElement>(null);
@@ -22,12 +24,15 @@ const InterviewForm = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
+    const userId = await localStorage.getItem("userid");
+
     const formData: any = {
       companyName: companyNameRef.current?.value || "",
       jobTitle: jobTitleRef.current?.value || "",
       verdict: verdictRef.current?.value || "",
       rounds: [],
       link: "",
+      userId: userId,
     };
 
     if (showLinkInput) {
@@ -39,13 +44,17 @@ const InterviewForm = () => {
       }));
     }
 
-    const data = await axios.post("http://localhost:3000/api/getInterviews", formData);
+    const data = await axios.post(
+      "http://localhost:3000/api/getInterviews",
+      formData
+    );
 
     if (data.data.msg === true) {
       toast.success("Data inserted successfully");
       if (formRef.current) {
         formRef.current.reset();
       }
+      router.push("/interview");
     } else {
       toast.error("Cannot Insert Data");
       if (formRef.current) {
@@ -59,7 +68,9 @@ const InterviewForm = () => {
   };
 
   const removeRound = () => {
-    setNumRounds((prevNumRounds) => (prevNumRounds > 1 ? prevNumRounds - 1 : prevNumRounds));
+    setNumRounds((prevNumRounds) =>
+      prevNumRounds > 1 ? prevNumRounds - 1 : prevNumRounds
+    );
   };
 
   const toggleLinkInput = () => {

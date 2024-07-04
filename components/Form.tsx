@@ -4,12 +4,14 @@ import React from "react";
 import { useRef } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 interface formProps {
   text: string;
 }
 
 const Form = (props: formProps) => {
+  const router = useRouter();
   const formRef = useRef<HTMLFormElement>(null);
   const companyNameRef = useRef<HTMLInputElement>(null);
   const jobTitleRef = useRef<HTMLInputElement>(null);
@@ -36,22 +38,24 @@ const Form = (props: formProps) => {
       userId: userId,
     };
 
-    const data = await axios.post("http://localhost:3000/api/getJobs",formData);
+    const data = await axios.post(
+      "http://localhost:3000/api/getJobs",
+      formData
+    );
 
     if (data.data.msg === true) {
       toast.success("Data inserted successfully");
       if (formRef.current) {
         formRef.current.reset();
       }
-    }
-    else{
+    } else {
       toast.error("Cannot Insert Data");
       if (formRef.current) {
         formRef.current.reset();
       }
+      router.push("/job");
     }
   };
-
 
   const handleIntSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,16 +76,18 @@ const Form = (props: formProps) => {
       userId: userId,
     };
 
-    const data = await axios.post("http://localhost:3000/api/getInternships",formData);
-
+    const data = await axios.post(
+      "http://localhost:3000/api/getInternships",
+      formData
+    );
 
     if (data.data.msg === true) {
       toast.success("Data inserted successfully");
       if (formRef.current) {
         formRef.current.reset();
       }
-    }
-    else{
+      router.push("/internship");
+    } else {
       toast.error("Cannot Insert Data");
       if (formRef.current) {
         formRef.current.reset();
@@ -93,7 +99,11 @@ const Form = (props: formProps) => {
   return (
     <div className="bg-gray-900 text-white mx-4 mt-40 md:mt-40 mb-10">
       <div className="flex justify-center items-center mt-20">
-        <form className="w-full max-w-lg" onSubmit={text === "Job" ? handleSubmit : handleIntSubmit} ref={formRef}>
+        <form
+          className="w-full max-w-lg"
+          onSubmit={text === "Job" ? handleSubmit : handleIntSubmit}
+          ref={formRef}
+        >
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
               <label className="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">
