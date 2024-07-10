@@ -3,14 +3,13 @@ import Footer from "@/components/Footer";
 import { Header } from "@/components/Header";
 import React, { use, useEffect, useState } from "react";
 import { getMyJob } from "../actions/getMyJob";
-import Card from "@/components/Card";
+import Card from "@/components/MyPostCard";
 import { getMyInternship } from "../actions/getMyInternship";
 import { getMyInterview } from "../actions/getMyInterview";
 import InterviewCard from "@/components/InterviewCard";
 
-
 const Page = () => {
-  const [activeSection, setActiveSection] = useState("jobs");
+  const [activeSection, setActiveSection] = useState("job");
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<any[] | null | undefined>([]);
   const [interviews, setInterviews] = useState<any[] | null | undefined>([]);
@@ -23,23 +22,21 @@ const Page = () => {
   useEffect(() => {
     const userId = localStorage.getItem("userid");
     const getMyPost = async () => {
-      if (activeSection === "jobs") {
+      if (activeSection === "job") {
         const data = await getMyJob(userId);
         setLoading(false);
         setJobs(data);
-        console.log(data);
       }
-      if (activeSection === "internships") {
+      if (activeSection === "internship") {
         const data = await getMyInternship(userId);
         setLoading(false);
         setJobs(data);
-        console.log(data);
       }
-      if (activeSection === "internships") {
+      if (activeSection === "interview") {
         const data = await getMyInterview(userId);
         setLoading(false);
         setInterviews(data);
-        console.log(data);
+
       }
     };
     getMyPost();
@@ -51,18 +48,18 @@ const Page = () => {
       <div className="flex-1 mt-20 mb-20">
         <div className="flex justify-center space-x-4">
           <SectionButton
-            section="jobs"
-            active={activeSection === "jobs"}
-            onClick={() => handleSectionClick("jobs")}
+            section="job"
+            active={activeSection === "job"}
+            onClick={() => handleSectionClick("job")}
           >
-            Jobs
+            Job
           </SectionButton>
           <SectionButton
-            section="internships"
-            active={activeSection === "internships"}
-            onClick={() => handleSectionClick("internships")}
+            section="internship"
+            active={activeSection === "internship"}
+            onClick={() => handleSectionClick("internship")}
           >
-            Internships
+            Internship
           </SectionButton>
           <SectionButton
             section="interview"
@@ -79,15 +76,17 @@ const Page = () => {
         ) : (
           <div className="lg:grid lg:grid-cols-4">
             {activeSection !== "interview" ? (
-               jobs ? (
+              jobs ? (
                 jobs.map((job) => (
                   <Card
+                    text={activeSection}
                     key={job.id}
                     companyName={job.companyname}
                     jobTitle={job.jobtitle}
                     location={job.location}
                     batchEligible={job.batcheligible}
                     jobLink={job.joblink}
+                    id={job.id}
                   />
                 ))
               ) : (
@@ -95,26 +94,22 @@ const Page = () => {
                   No jobs/internships data available
                 </div>
               )
+            ) : interviews ? (
+              interviews.map((inter) => (
+                <InterviewCard
+                  key={inter.id}
+                  companyName={inter.companyname}
+                  position={inter.jobtitle}
+                  verdict={inter.verdict}
+                  id={inter.id}
+                  link={inter.link}
+                />
+              ))
             ) : (
-
-              interviews ? (
-                interviews.map((inter) => (
-                  <InterviewCard
-                    key={inter.id}
-                    companyName={inter.companyname}
-                    position={inter.jobtitle}
-                    verdict={inter.verdict}
-                    id={inter.id}
-                    link={inter.link}
-                  />
-                ))
-              ) : (
-                <div className="col-span-4 text-center text-gray-400 py-8">
-                  No interview data available
-                </div>
-              )
+              <div className="col-span-4 text-center text-gray-400 py-8">
+                No interview data available
+              </div>
             )}
-
           </div>
         )}
       </div>

@@ -1,0 +1,106 @@
+"use client";
+import { deleteInternship } from "@/app/actions/deleteInternship";
+import { deleteJob } from "@/app/actions/deleteJob";
+import { useRouter } from "next/navigation";
+import React, { useState } from "react";
+import toast from "react-hot-toast";
+import {
+  FaBuilding,
+  FaMapMarkerAlt,
+  FaGraduationCap,
+  FaEdit,
+  FaTrash,
+} from "react-icons/fa";
+
+interface CardProps {
+  companyName: string;
+  jobTitle: string;
+  location: string;
+  batchEligible: string;
+  jobLink: string;
+  text: string;
+  id: string;
+}
+
+const Card: React.FC<CardProps> = ({
+  companyName,
+  jobTitle,
+  location,
+  batchEligible,
+  jobLink,
+  text,
+  id,
+}) => {
+  console.log(text);
+  const router = useRouter();
+  const handleEditClick = () => {
+    // Add edit functionality here
+    router.push(`/${text}/edit/${id}`);
+    console.log("Edit clicked");
+  };
+
+  const handleDeleteClick = async () => {
+    if (text === "job") {
+      const res = await deleteJob(id);
+      if (res) {
+        toast.success("Data deleted Successfully");
+        window.location.reload();
+      }
+    }
+
+
+    if (text === "internship") {
+        const res = await deleteInternship(id);
+        if (res) {
+          toast.success("Data deleted Successfully");
+          window.location.reload();
+        }
+      }
+    // Add delete functionality here
+    console.log("Delete clicked");
+  };
+
+  return (
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">
+      <div className="flex justify-between">
+        <div> </div>
+        <div className="flex space-x-4">
+          <FaEdit
+            className="text-blue-400 text-xl cursor-pointer"
+            onClick={handleEditClick}
+          />
+          <FaTrash
+            className="text-red-400 text-xl cursor-pointer"
+            onClick={handleDeleteClick}
+          />
+        </div>
+      </div>
+
+      <h2 className="text-2xl font-extrabold mb-4 flex items-center">
+        <FaBuilding className="mr-2 text-blue-400" />
+        {companyName}
+      </h2>
+      <p className="text-xl font-semibold mb-3">{jobTitle}</p>
+      <div className="text-md mb-3 flex items-center">
+        <FaMapMarkerAlt className="mr-2 text-green-400" />
+        <span>Location: {location}</span>
+      </div>
+      <div className="text-md mb-3 flex items-center">
+        <FaGraduationCap className="mr-2 text-yellow-400" />
+        <span>Batch Eligible: {batchEligible}</span>
+      </div>
+      <div className="text-right mt-4">
+        <a
+          href={jobLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105"
+        >
+          Apply
+        </a>
+      </div>
+    </div>
+  );
+};
+
+export default Card;

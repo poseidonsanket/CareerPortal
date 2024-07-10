@@ -1,23 +1,19 @@
 "use client";
 
-import React from "react";
-import { useRef } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
-interface formProps {
-  text: string;
-}
-
-const Form = (props: formProps) => {
+const Form = ({ formdata, text, id }: any) => {
+  console.log(formdata);
+  console.log(text, id);
   const router = useRouter();
-  const formRef = useRef<HTMLFormElement>(null);
-  const companyNameRef = useRef<HTMLInputElement>(null);
-  const jobTitleRef = useRef<HTMLInputElement>(null);
-  const locationRef = useRef<HTMLInputElement>(null);
-  const batchEligibleRef = useRef<HTMLInputElement>(null);
-  const jobLinkRef = useRef<HTMLInputElement>(null);
+  const [companyName, setCompanyName] = useState<string>(formdata.companyname);
+  const [jobTitle, setJobTitle] = useState<string>(formdata.jobtitle);
+  const [location, setLocation] = useState<string>(formdata.location);
+  const [batchEligible, setBatchEligible] = useState<string>(formdata.batcheligible);
+  const [jobLink, setJobLink] = useState<string>(formdata.joblink);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,30 +26,23 @@ const Form = (props: formProps) => {
     }
 
     const formData = {
-      companyName: companyNameRef.current?.value,
-      jobTitle: jobTitleRef.current?.value,
-      location: locationRef.current?.value,
-      batchEligible: batchEligibleRef.current?.value,
-      jobLink: jobLinkRef.current?.value,
+      companyName: companyName,
+      jobTitle: jobTitle,
+      location: location,
+      batchEligible: batchEligible,
+      jobLink: jobLink,
       userId: userId,
+      id: id,
     };
+    console.log(formData);
 
-    const data = await axios.post(
-      "http://localhost:3000/api/getJobs",
-      formData
-    );
+    const data = await axios.put("http://localhost:3000/api/getJobs", formData);
 
     if (data.data.msg === true) {
-      toast.success("Data inserted successfully");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
-      router.push("/job");
+      toast.success("Data Updated successfully");
+      router.push("/myposts");
     } else {
       toast.error("Cannot Insert Data");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
     }
   };
 
@@ -68,11 +57,12 @@ const Form = (props: formProps) => {
     }
 
     const formData = {
-      companyName: companyNameRef.current?.value,
-      intTitle: jobTitleRef.current?.value,
-      location: locationRef.current?.value,
-      batchEligible: batchEligibleRef.current?.value,
-      intLink: jobLinkRef.current?.value,
+      ...formdata,
+      companyName: companyName,
+      jobTitle: jobTitle,
+      location: location,
+      batchEligible: batchEligible,
+      jobLink: jobLink,
       userId: userId,
     };
 
@@ -83,26 +73,18 @@ const Form = (props: formProps) => {
 
     if (data.data.msg === true) {
       toast.success("Data inserted successfully");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
-      router.push("/internship");
+      router.push("/myposts");
     } else {
       toast.error("Cannot Insert Data");
-      if (formRef.current) {
-        formRef.current.reset();
-      }
     }
   };
 
-  const { text } = props;
   return (
     <div className="bg-gray-900 text-white mx-4 mt-40 md:mt-40 mb-10">
       <div className="flex justify-center items-center mt-20">
         <form
           className="w-full max-w-lg"
           onSubmit={text === "Job" ? handleSubmit : handleIntSubmit}
-          ref={formRef}
         >
           <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full px-3">
@@ -110,11 +92,12 @@ const Form = (props: formProps) => {
                 Company Name
               </label>
               <input
-                ref={companyNameRef}
                 className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-gray-700"
                 id="company-name"
                 type="text"
                 placeholder="Enter company name"
+                value={companyName}
+                onChange={(e: any) => setCompanyName(e.target.value)}
                 required
               />
             </div>
@@ -125,11 +108,12 @@ const Form = (props: formProps) => {
                 {text + " Position"}
               </label>
               <input
-                ref={jobTitleRef}
                 className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
                 id="job-title"
                 type="text"
                 placeholder={"Enter " + text + " title"}
+                value={jobTitle}
+                onChange={(e: any) => setJobTitle(e.target.value)}
                 required
               />
             </div>
@@ -140,11 +124,12 @@ const Form = (props: formProps) => {
                 Location
               </label>
               <input
-                ref={locationRef}
                 className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
                 id="location"
                 type="text"
                 placeholder="Enter location"
+                value={location}
+                onChange={(e: any) => setLocation(e.target.value)}
                 required
               />
             </div>
@@ -155,11 +140,12 @@ const Form = (props: formProps) => {
                 Batch Eligible
               </label>
               <input
-                ref={batchEligibleRef}
                 className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
                 id="batch-eligible"
                 type="text"
                 placeholder="Enter batch eligibility"
+                value={batchEligible}
+                onChange={(e: any) => setBatchEligible(e.target.value)}
                 required
               />
             </div>
@@ -170,11 +156,12 @@ const Form = (props: formProps) => {
                 {text + " Link"}
               </label>
               <input
-                ref={jobLinkRef}
                 className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
                 id="job-link"
                 type="url"
                 placeholder={"Enter" + " " + text + " link"}
+                value={jobLink}
+                onChange={(e: any) => setJobLink(e.target.value)}
                 required
               />
             </div>

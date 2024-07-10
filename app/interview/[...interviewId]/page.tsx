@@ -31,7 +31,6 @@ const page = () => {
   });
   const [rounds, setRounds] = useState<rounds[]>([]);
   const interviewId = Number(params.interviewId[0]);
-  console.log(Number(params.interviewId[0]));
 
   useEffect(() => {
     const getDescription = async () => {
@@ -44,8 +43,6 @@ const page = () => {
     };
     getDescription();
   }, [interviewId]);
-  console.log(interview);
-  console.log(rounds);
   return loading ? (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
