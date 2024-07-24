@@ -6,7 +6,7 @@ import { getMyJob } from "../actions/getMyJob";
 import Card from "@/components/MyPostCard";
 import { getMyInternship } from "../actions/getMyInternship";
 import { getMyInterview } from "../actions/getMyInterview";
-import InterviewCard from "@/components/InterviewCard";
+import MyPostInterviewCard from "@/components/MyPostInterviewCard";
 
 const Page = () => {
   const [activeSection, setActiveSection] = useState("job");
@@ -36,7 +36,6 @@ const Page = () => {
         const data = await getMyInterview(userId);
         setLoading(false);
         setInterviews(data);
-
       }
     };
     getMyPost();
@@ -96,7 +95,7 @@ const Page = () => {
               )
             ) : interviews ? (
               interviews.map((inter) => (
-                <InterviewCard
+                <MyPostInterviewCard
                   key={inter.id}
                   companyName={inter.companyname}
                   position={inter.jobtitle}
