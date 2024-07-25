@@ -21,6 +21,7 @@ interface InterviewCardProps {
   verdict: string;
   id: number;
   link: string;
+  onDelete: (id: number) => void;
 }
 
 const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
@@ -29,6 +30,7 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
   verdict,
   id,
   link,
+  onDelete,
 }) => {
   const router = useRouter();
 
@@ -64,10 +66,10 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
     const res = await deleteInterview(id1);
     if (res) {
       toast.success("Data deleted Successfully");
-      window.location.reload();
+      onDelete(id);
     }
-    
-    console.log(typeof(id));
+
+    console.log(typeof id);
   }
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">

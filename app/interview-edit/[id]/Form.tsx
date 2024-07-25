@@ -9,7 +9,7 @@ interface Round {
   description: string;
 }
 
-const Form = ({ formdata, roundData }: any) => {
+const Form = ({ formdata, roundData, id }: any) => {
   const router = useRouter();
   const [companyName, setCompanyName] = useState<string>(formdata?.companyname);
   const [jobTitle, setJobTitle] = useState<string>(formdata?.jobtitle);
@@ -30,6 +30,7 @@ const Form = ({ formdata, roundData }: any) => {
       rounds: [],
       link: "",
       userId: userId,
+      id: id,
     };
 
     if (link != "") {
@@ -40,17 +41,17 @@ const Form = ({ formdata, roundData }: any) => {
 
     console.log(formData);
 
-    // const data = await axios.post(
-    //   "http://localhost:3000/api/getInterviews",
-    //   formData
-    // );
+    const data = await axios.put(
+      "http://localhost:3000/api/getInterviews",
+      formData
+    );
 
-    // if (data.data.msg === true) {
-    //   toast.success("Data inserted successfully");
-    //   router.push("/interview");
-    // } else {
-    //   toast.error("Cannot Insert Data");
-    // }
+    if (data.data.msg === true) {
+      toast.success("Data Updated successfully");
+      router.push("/myposts");
+    } else {
+      toast.error("Cannot Update Data");
+    }
   };
 
   const handleRoundTitleChange = (index: number, value: string) => {
@@ -102,7 +103,7 @@ const Form = ({ formdata, roundData }: any) => {
             </div>
           </div>
 
-          {link != "" ? (
+          {formdata?.link != "" ? (
             <div className="flex flex-wrap -mx-3 mb-6">
               <div className="w-full px-3">
                 <label className="block uppercase tracking-wide text-gray-300 text-xs font-bold mb-2">
@@ -110,7 +111,7 @@ const Form = ({ formdata, roundData }: any) => {
                 </label>
                 <input
                   className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
-                  type="text"
+                  type="url"
                   value={link}
                   placeholder="Enter link"
                   required

@@ -41,6 +41,17 @@ const Page = () => {
     getMyPost();
   }, [activeSection]);
 
+  const handleDeleteCard = (id: string) => {
+    setJobs((prevJobs) => prevJobs?.filter((job) => job.id !== id));
+  };
+
+  const handleDeleteInterviewCard = (id: number) => {
+    setInterviews((prevInterviews) =>
+      prevInterviews?.filter((inter) => inter.id !== id)
+    );
+    console.log(interviews);
+  };
+
   return (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
@@ -86,6 +97,7 @@ const Page = () => {
                     batchEligible={job.batcheligible}
                     jobLink={job.joblink}
                     id={job.id}
+                    onDelete={handleDeleteCard}
                   />
                 ))
               ) : (
@@ -102,6 +114,7 @@ const Page = () => {
                   verdict={inter.verdict}
                   id={inter.id}
                   link={inter.link}
+                  onDelete={handleDeleteInterviewCard}
                 />
               ))
             ) : (

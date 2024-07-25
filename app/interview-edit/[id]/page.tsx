@@ -12,7 +12,7 @@ const page = () => {
   const [formData, setFormData] = useState<any[] | null>();
   const [roundsData, setRoundsData] = useState<any[] | null>([]);
   const id = params.id;
-  console.log(id);
+  console.log(typeof(id));
   useEffect(() => {
     const getData = async () => {
       const data = await getEditInterview(id);

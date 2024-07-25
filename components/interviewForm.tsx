@@ -131,7 +131,7 @@ const InterviewForm = () => {
                 <input
                   ref={linkRef}
                   className="appearance-none block w-full bg-gray-800 text-white border border-gray-700 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
-                  type="text"
+                  type="url"
                   placeholder="Enter link"
                   required
                 />

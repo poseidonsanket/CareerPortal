@@ -20,6 +20,7 @@ interface CardProps {
   jobLink: string;
   text: string;
   id: string;
+  onDelete: (id: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -30,6 +31,7 @@ const Card: React.FC<CardProps> = ({
   jobLink,
   text,
   id,
+  onDelete,
 }) => {
   console.log(text);
   const router = useRouter();
@@ -44,18 +46,17 @@ const Card: React.FC<CardProps> = ({
       const res = await deleteJob(id);
       if (res) {
         toast.success("Data deleted Successfully");
-        window.location.reload();
+        onDelete(id);
       }
     }
 
-
     if (text === "internship") {
-        const res = await deleteInternship(id);
-        if (res) {
-          toast.success("Data deleted Successfully");
-          window.location.reload();
-        }
+      const res = await deleteInternship(id);
+      if (res) {
+        toast.success("Data deleted Successfully");
+        onDelete(id);
       }
+    }
     // Add delete functionality here
     console.log("Delete clicked");
   };
