@@ -13,18 +13,26 @@ interface jobs {
   joblink: string;
   userid: string;
   id: number;
+  isSaved: boolean;
 }
 
 const index = () => {
-  const userId = localStorage.getItem("userid");
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<jobs[]>([]);
 
   useEffect(() => {
     async function getJobs() {
-      const response = await axios.get("http://localhost:3000/api/getJobs");
+      const userId = localStorage.getItem("userid");
+      const response = await axios.get(
+        "http://localhost:3000/api/getJobs",
+        //@ts-ignore
+        {
+          params: { userId },
+        }
+      );
       setLoading(false);
       setJobs(response.data.Jobs);
+      console.log(response.data.Jobs);
     }
     getJobs();
   }, []);
@@ -55,6 +63,7 @@ const index = () => {
               batchEligible={job.batcheligible}
               jobLink={job.joblink}
               text={"job"}
+              isSavedForMe={job.isSaved}
             />
           ))}
         </div>

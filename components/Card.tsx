@@ -1,5 +1,8 @@
 "use client";
+import { saveInternship } from "@/app/actions/saveInternship";
 import { saveJob } from "@/app/actions/saveJob";
+import { unsaveInternship } from "@/app/actions/unsaveInternship";
+import { unsaveJob } from "@/app/actions/unsaveJob";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -18,6 +21,7 @@ interface CardProps {
   jobLink: string;
   text: string;
   id: number;
+  isSavedForMe: boolean;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -28,9 +32,10 @@ const Card: React.FC<CardProps> = ({
   jobLink,
   text,
   id,
+  isSavedForMe,
 }) => {
   const userId = localStorage.getItem("userid");
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(isSavedForMe);
 
   const handleSaveClick = async (id: number, userId: string | null) => {
     console.log(id);
@@ -44,12 +49,39 @@ const Card: React.FC<CardProps> = ({
         );
         if (data) {
           toast.success(`${text} Saved`);
+          setIsSaved(true);
         } else {
           toast.error(`${text} Not Saved`);
         }
+      } else {
+        const data = await unsaveJob(id);
+        if (data) {
+          setIsSaved(false);
+          toast.success(`${text} Unsaved`);
+        }
       }
     }
-    setIsSaved(!isSaved);
+    if (text === "internship") {
+      if (!isSaved) {
+        const data = await saveInternship(
+          //@ts-ignore
+          userId,
+          id
+        );
+        if (data) {
+          toast.success(`${text} Saved`);
+          setIsSaved(true);
+        } else {
+          toast.error(`${text} Not Saved`);
+        }
+      } else {
+        const data = await unsaveInternship(id);
+        if (data) {
+          setIsSaved(false);
+          toast.success(`${text} Unsaved`);
+        }
+      }
+    }
   };
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">

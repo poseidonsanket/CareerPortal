@@ -13,6 +13,7 @@ interface internships {
   intlink: string;
   userid: string;
   id: number;
+  isSaved: boolean;
 }
 
 const page = () => {
@@ -21,11 +22,16 @@ const page = () => {
 
   useEffect(() => {
     async function getInternships() {
+      const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "http://localhost:3000/api/getInternships"
+        "http://localhost:3000/api/getInternships",
+        {
+          params: { userId },
+        }
       );
       setLoading(false);
       setInts(response.data.Internships);
+      console.log(response.data.Internships);
     }
     getInternships();
   }, []);
@@ -54,7 +60,8 @@ const page = () => {
               location={int.location}
               batchEligible={int.batcheligible}
               jobLink={int.intlink}
-              text={"int"}
+              text={"internship"}
+              isSavedForMe={int.isSaved}
             />
           ))}
         </div>

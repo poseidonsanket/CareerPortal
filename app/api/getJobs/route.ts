@@ -1,11 +1,29 @@
 import { supabase } from "@/utils/supabase";
 import { NextRequest } from "next/server";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const userId = req.nextUrl.searchParams.get("userId");
+  console.log(userId);
+
   const { data, error } = await supabase.from("jobs").select();
 
+  const { data: savedJobs, error: savedJobsError } = await supabase
+    .from("savedjobs")
+    .select("jobid")
+    .eq("userid", userId);
+
+  //@ts-ignore
+  const savedJobIds = new Set(savedJobs?.map((job) => job.jobid));
+
+  console.log(savedJobIds);
+
+  const jobsWithSavedFlag = data?.map((job) => ({
+    ...job,
+    isSaved: savedJobIds.has(job.id),
+  }));
+
   return Response.json({
-    Jobs: data,
+    Jobs: jobsWithSavedFlag,
   });
 }
 
