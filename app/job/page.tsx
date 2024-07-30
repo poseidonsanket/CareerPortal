@@ -16,6 +16,7 @@ interface jobs {
 }
 
 const index = () => {
+  const userId = localStorage.getItem("userid");
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<jobs[]>([]);
 
@@ -47,11 +48,13 @@ const index = () => {
           {jobs.map((job) => (
             <Card
               key={job.id}
+              id={job.id}
               companyName={job.companyname}
               jobTitle={job.jobtitle}
               location={job.location}
               batchEligible={job.batcheligible}
               jobLink={job.joblink}
+              text={"job"}
             />
           ))}
         </div>

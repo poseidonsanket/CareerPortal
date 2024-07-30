@@ -20,6 +20,8 @@ interface CardProps {
   jobLink: string;
   text: string;
   id: string;
+  intLink: string;
+  intTitle: string;
   onDelete: (id: string) => void;
 }
 
@@ -31,9 +33,11 @@ const Card: React.FC<CardProps> = ({
   jobLink,
   text,
   id,
+  intLink,
+  intTitle,
   onDelete,
 }) => {
-  console.log(text);
+  console.log(jobLink);
   const router = useRouter();
   const handleEditClick = () => {
     // Add edit functionality here
@@ -81,7 +85,9 @@ const Card: React.FC<CardProps> = ({
         <FaBuilding className="mr-2 text-blue-400" />
         {companyName}
       </h2>
-      <p className="text-xl font-semibold mb-3">{jobTitle}</p>
+      <p className="text-xl font-semibold mb-3">
+        {jobTitle ? jobTitle : intTitle}
+      </p>
       <div className="text-md mb-3 flex items-center">
         <FaMapMarkerAlt className="mr-2 text-green-400" />
         <span>Location: {location}</span>
@@ -92,10 +98,10 @@ const Card: React.FC<CardProps> = ({
       </div>
       <div className="text-right mt-4">
         <a
-          href={jobLink}
+          href={jobLink ? jobLink : intLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105"
+          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-transform transform hover:scale-105 cursor-pointer"
         >
           Apply
         </a>

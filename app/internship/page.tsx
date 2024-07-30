@@ -45,14 +45,16 @@ const page = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {ints.map((int) => (
+          {ints?.map((int) => (
             <Card
               key={int.id}
+              id={int.id}
               companyName={int.companyname}
               jobTitle={int.inttitle}
               location={int.location}
               batchEligible={int.batcheligible}
               jobLink={int.intlink}
+              text={"int"}
             />
           ))}
         </div>

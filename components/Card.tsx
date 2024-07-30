@@ -1,5 +1,7 @@
 "use client";
+import { saveJob } from "@/app/actions/saveJob";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 import {
   FaBuilding,
   FaMapMarkerAlt,
@@ -14,6 +16,8 @@ interface CardProps {
   location: string;
   batchEligible: string;
   jobLink: string;
+  text: string;
+  id: number;
 }
 
 const Card: React.FC<CardProps> = ({
@@ -22,17 +26,39 @@ const Card: React.FC<CardProps> = ({
   location,
   batchEligible,
   jobLink,
+  text,
+  id,
 }) => {
+  const userId = localStorage.getItem("userid");
   const [isSaved, setIsSaved] = useState(false);
 
-  const handleSaveClick = () => {
+  const handleSaveClick = async (id: number, userId: string | null) => {
+    console.log(id);
+    console.log(userId);
+    if (text === "job") {
+      if (!isSaved) {
+        const data = await saveJob(
+          //@ts-ignore
+          userId,
+          id
+        );
+        if (data) {
+          toast.success(`${text} Saved`);
+        } else {
+          toast.error(`${text} Not Saved`);
+        }
+      }
+    }
     setIsSaved(!isSaved);
   };
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">
       <div className="flex justify-between">
-        <div>{" "}</div>
-        <div className="flex flex-end" onClick={handleSaveClick}>
+        <div> </div>
+        <div
+          className="flex flex-end"
+          onClick={() => handleSaveClick(id, userId)}
+        >
           {isSaved ? (
             <FaBookmark className="text-white-400 text-xl" />
           ) : (

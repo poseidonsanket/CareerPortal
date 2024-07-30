@@ -31,6 +31,7 @@ const Page = () => {
         const data = await getMyInternship(userId);
         setLoading(false);
         setJobs(data);
+        console.log(data);
       }
       if (activeSection === "interview") {
         const data = await getMyInterview(userId);
@@ -97,6 +98,8 @@ const Page = () => {
                     batchEligible={job.batcheligible}
                     jobLink={job.joblink}
                     id={job.id}
+                    intTitle={job.inttitle}
+                    intLink={job.intlink}
                     onDelete={handleDeleteCard}
                   />
                 ))
