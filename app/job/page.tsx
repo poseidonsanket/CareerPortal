@@ -52,19 +52,23 @@ const index = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {jobs.map((job) => (
-            <Card
-              key={job.id}
-              id={job.id}
-              companyName={job.companyname}
-              jobTitle={job.jobtitle}
-              location={job.location}
-              batchEligible={job.batcheligible}
-              jobLink={job.joblink}
-              text={"job"}
-              isSavedForMe={job.isSaved}
-            />
-          ))}
+          {jobs.length > 0 ? (
+            jobs.map((job) => (
+              <Card
+                key={job.id}
+                id={job.id}
+                companyName={job.companyname}
+                jobTitle={job.jobtitle}
+                location={job.location}
+                batchEligible={job.batcheligible}
+                jobLink={job.joblink}
+                text={"job"}
+                isSavedForMe={job.isSaved}
+              />
+            ))
+          ) : (
+            <h1 className="col-span-4 text-center py-8">No jobs</h1>
+          )}
         </div>
       </div>
 

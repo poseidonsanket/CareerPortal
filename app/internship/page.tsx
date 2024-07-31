@@ -51,7 +51,7 @@ const page = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {ints?.map((int) => (
+          {ints.length>0 ? ints?.map((int) => (
             <Card
               key={int.id}
               id={int.id}
@@ -63,7 +63,9 @@ const page = () => {
               text={"internship"}
               isSavedForMe={int.isSaved}
             />
-          ))}
+          )): (
+            <h1 className="col-span-4 text-center py-8">No Interviews</h1>
+          )}
         </div>
       </div>
       <Footer />
