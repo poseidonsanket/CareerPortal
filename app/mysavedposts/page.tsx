@@ -20,7 +20,7 @@ const Page = () => {
   const handleSectionClick = (section: string) => {
     setActiveSection(section);
   };
-  console.log(activeSection);
+
 
   useEffect(() => {
     const getMyPost = async () => {
@@ -29,7 +29,6 @@ const Page = () => {
         const response = await getMySavedJob(userId);
         setLoading(false);
         setJobs(response);
-        console.log(response);
       }
       if (activeSection === "internship") {
         const userId = localStorage.getItem("userid");
@@ -55,7 +54,7 @@ const Page = () => {
     setInterviews((prevInterviews) =>
       prevInterviews?.filter((inter) => inter.id !== id)
     );
-    console.log(interviews);
+
   };
 
   return (

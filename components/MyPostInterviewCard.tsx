@@ -58,7 +58,6 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
   }
   function handleEditClick() {
     router.push(`/interview-edit/${id}`);
-    console.log("Edit clicked");
   }
 
   async function handleDeleteClick() {
@@ -69,7 +68,6 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
       onDelete(id);
     }
 
-    console.log(typeof id);
   }
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">

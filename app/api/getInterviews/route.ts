@@ -37,7 +37,6 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId");
-  console.log(userId);
   const { data, error } = await supabase.from("interviews").select();
 
   const { data: savedInterviews, error: savedJobsError } = await supabase
@@ -49,7 +48,6 @@ export async function GET(req: NextRequest) {
     savedInterviews?.map((inter) => inter.interviewid)
   );
 
-  console.log(savedInterviewIds);
 
   const InterviewsWithSavedFlag = data?.map((inter) => ({
     ...inter,

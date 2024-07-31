@@ -38,8 +38,6 @@ const Card: React.FC<CardProps> = ({
   const [isSaved, setIsSaved] = useState(isSavedForMe);
 
   const handleSaveClick = async (id: number, userId: string | null) => {
-    console.log(id);
-    console.log(userId);
     if (text === "job") {
       if (!isSaved) {
         const data = await saveJob(

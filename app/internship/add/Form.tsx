@@ -6,8 +6,6 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 
 const Form = ({ formdata, text, id }: any) => {
-  console.log(formdata);
-  console.log(text, id);
   const router = useRouter();
   const [companyName, setCompanyName] = useState<string>(formdata.companyname);
   const [jobTitle, setJobTitle] = useState<string>(formdata.jobtitle);
@@ -34,7 +32,6 @@ const Form = ({ formdata, text, id }: any) => {
       userId: userId,
       id: id,
     };
-    console.log(formData);
 
     const data = await axios.put("http://localhost:3000/api/getJobs", formData);
 

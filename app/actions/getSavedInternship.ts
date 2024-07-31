@@ -10,11 +10,9 @@ export async function getMySavedInternship(userId: string | null) {
     .select("internshipid")
     .eq("userid", userId);
 
-  console.log(savedInts);
 
   const intIds = savedInts?.map((savedint) => savedint.internshipid);
 
-  console.log(intIds);
 
   // Fetch jobs using the saved job IDs
   const { data: ints, error: IntsError } = await supabase
@@ -23,8 +21,6 @@ export async function getMySavedInternship(userId: string | null) {
     //@ts-ignore
     .in("id", intIds);
 
-  console.log(ints);
-  // console.log(error);
 
   return ints;
 }

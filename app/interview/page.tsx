@@ -29,7 +29,6 @@ const page = () => {
       );
       setLoading(false);
       setInterviews(response.data.Interviews);
-      console.log(response.data.Interviews);
     }
     getInterviews();
   }, []);

@@ -32,7 +32,6 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
-      console.log(response.data.Jobs);
     }
     getJobs();
   }, []);

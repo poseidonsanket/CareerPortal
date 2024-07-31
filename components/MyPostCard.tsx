@@ -37,12 +37,12 @@ const Card: React.FC<CardProps> = ({
   intTitle,
   onDelete,
 }) => {
-  console.log(jobLink);
+
   const router = useRouter();
   const handleEditClick = () => {
     // Add edit functionality here
     router.push(`/${text}/edit/${id}`);
-    console.log("Edit clicked");
+
   };
 
   const handleDeleteClick = async () => {
@@ -62,7 +62,6 @@ const Card: React.FC<CardProps> = ({
       }
     }
     // Add delete functionality here
-    console.log("Delete clicked");
   };
 
   return (

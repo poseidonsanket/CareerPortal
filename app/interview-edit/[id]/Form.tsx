@@ -16,7 +16,6 @@ const Form = ({ formdata, roundData, id }: any) => {
   const [roundsData, setRoundsData] = useState<any[]>(roundData);
   const [verdict, setVerdict] = useState<string>(formdata?.verdict);
   const [link, setLink] = useState<string>(formdata?.link);
-  console.log(roundData);
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
@@ -39,7 +38,6 @@ const Form = ({ formdata, roundData, id }: any) => {
       formData.rounds = roundData;
     }
 
-    console.log(formData);
 
     const data = await axios.put(
       "http://localhost:3000/api/getInterviews",

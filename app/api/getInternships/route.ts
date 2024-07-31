@@ -3,7 +3,6 @@ import { NextRequest } from "next/server";
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId");
-  console.log(userId);
   const { data, error } = await supabase.from("internships").select();
 
   const { data: savedInts, error: savedJobsError } = await supabase
@@ -13,7 +12,6 @@ export async function GET(req: NextRequest) {
 
   const savedIntIds = new Set(savedInts?.map((int) => int.internshipid));
 
-  console.log(savedIntIds);
 
   const intsWithSavedFlag = data?.map((int) => ({
     ...int,

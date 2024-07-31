@@ -12,7 +12,6 @@ const page = () => {
   const [formData, setFormData] = useState<any[] | null>();
   const [roundsData, setRoundsData] = useState<any[] | null>([]);
   const id = params.id;
-  console.log(typeof(id));
   useEffect(() => {
     const getData = async () => {
       const data = await getEditInterview(id);
@@ -26,7 +25,6 @@ const page = () => {
     };
     getData();
   }, []);
-  console.log(formData)
   return loading ? (
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />

@@ -10,11 +10,11 @@ export async function getMySavedInterviews(userId: string | null) {
     .select("interviewid")
     .eq("userid", userId);
 
-  console.log(savedInterviews);
+
 
   const interviewIds = savedInterviews?.map((savedInterview) => savedInterview.interviewid);
 
-  console.log(interviewIds);
+
 
   // Fetch jobs using the saved job IDs
   const { data: interviews, error: InterviewsError } = await supabase
@@ -23,8 +23,7 @@ export async function getMySavedInterviews(userId: string | null) {
     //@ts-ignore
     .in("id", interviewIds);
 
-  console.log(interviews);
-  // console.log(error);
+
 
   return interviews;
 }

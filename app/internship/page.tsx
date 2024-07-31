@@ -31,7 +31,7 @@ const page = () => {
       );
       setLoading(false);
       setInts(response.data.Internships);
-      console.log(response.data.Internships);
+
     }
     getInternships();
   }, []);
