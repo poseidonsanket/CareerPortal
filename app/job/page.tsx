@@ -24,7 +24,7 @@ const index = () => {
     async function getJobs() {
       const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "http://localhost:3000/api/getJobs",
+        "https://career-portal-eight.vercel.app/api/getJobs",
         //@ts-ignore
         {
           params: { userId },
@@ -32,7 +32,7 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
-      console.log(response.data.Jobs);
+      console.log(response.data.Jobs)
     }
     getJobs();
   }, []);

@@ -24,7 +24,7 @@ const page = () => {
     async function getInternships() {
       const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "http://localhost:3000/api/getInternships",
+        "https://career-portal-eight.vercel.app/api/getInternships",
         {
           params: { userId },
         }
