@@ -32,6 +32,7 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
+      console.log(response.data.Jobs);
     }
     getJobs();
   }, []);
@@ -52,7 +53,7 @@ const index = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {jobs.length > 0 ? (
+          {jobs.length > 0 && jobs ? (
             jobs.map((job) => (
               <Card
                 key={job.id}

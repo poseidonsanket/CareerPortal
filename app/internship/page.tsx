@@ -31,7 +31,7 @@ const page = () => {
       );
       setLoading(false);
       setInts(response.data.Internships);
-
+      console.log(response.data.Internships);
     }
     getInternships();
   }, []);
@@ -51,19 +51,21 @@ const page = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {ints.length>0 ? ints?.map((int) => (
-            <Card
-              key={int.id}
-              id={int.id}
-              companyName={int.companyname}
-              jobTitle={int.inttitle}
-              location={int.location}
-              batchEligible={int.batcheligible}
-              jobLink={int.intlink}
-              text={"internship"}
-              isSavedForMe={int.isSaved}
-            />
-          )): (
+          {ints.length > 0 && ints ? (
+            ints?.map((int) => (
+              <Card
+                key={int.id}
+                id={int.id}
+                companyName={int.companyname}
+                jobTitle={int.inttitle}
+                location={int.location}
+                batchEligible={int.batcheligible}
+                jobLink={int.intlink}
+                text={"internship"}
+                isSavedForMe={int.isSaved}
+              />
+            ))
+          ) : (
             <h1 className="col-span-4 text-center py-8">No Interviews</h1>
           )}
         </div>

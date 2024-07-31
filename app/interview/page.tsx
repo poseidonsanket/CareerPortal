@@ -29,6 +29,7 @@ const page = () => {
       );
       setLoading(false);
       setInterviews(response.data.Interviews);
+      console.log(response.data.Interviews);
     }
     getInterviews();
   }, []);
@@ -48,7 +49,7 @@ const page = () => {
 
       <div className="flex-1 mt-20 mb-20">
         <div className="lg:grid lg:grid-cols-4">
-          {interviews.length > 0 ? (
+          {interviews.length > 0 && interviews? (
             interviews?.map((inter) => (
               <InterviewCard
                 key={inter.id}
