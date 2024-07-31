@@ -10,6 +10,7 @@ import MyPostInterviewCard from "@/components/MyPostInterviewCard";
 
 const Page = () => {
   const [activeSection, setActiveSection] = useState("job");
+
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<any[] | null | undefined>([]);
   const [interviews, setInterviews] = useState<any[] | null | undefined>([]);
