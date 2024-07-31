@@ -11,6 +11,7 @@ interface interviews {
   verdict: string;
   id: number;
   link: string;
+  isSaved: boolean;
 }
 
 const page = () => {
@@ -19,11 +20,16 @@ const page = () => {
 
   useEffect(() => {
     async function getInterviews() {
+      const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "http://localhost:3000/api/getInterviews"
+        "http://localhost:3000/api/getInterviews",
+        {
+          params: { userId },
+        }
       );
       setLoading(false);
       setInterviews(response.data.Interviews);
+      console.log(response.data.Interviews);
     }
     getInterviews();
   }, []);
@@ -51,6 +57,7 @@ const page = () => {
               verdict={inter.verdict}
               id={inter.id}
               link={inter.link}
+              isSavedForMe={inter.isSaved}
             />
           ))}
         </div>

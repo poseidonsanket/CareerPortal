@@ -10,6 +10,9 @@ import {
   FaRegBookmark,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import { saveInterview } from "@/app/actions/saveInterview";
+import { unsaveInterview } from "@/app/actions/unsaveInterview";
 
 interface InterviewCardProps {
   companyName: string;
@@ -17,6 +20,7 @@ interface InterviewCardProps {
   verdict: string;
   id: number;
   link: string;
+  isSavedForMe: boolean;
 }
 
 const InterviewCard: React.FC<InterviewCardProps> = ({
@@ -25,12 +29,32 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
   verdict,
   id,
   link,
+  isSavedForMe,
 }) => {
-  const [isSaved, setIsSaved] = useState(false);
+  const [isSaved, setIsSaved] = useState(isSavedForMe);
+  const userId = localStorage.getItem("userid");
   const router = useRouter();
 
-  const handleSaveClick = () => {
-    setIsSaved(!isSaved);
+  const handleSaveClick = async (id: number, userId: string | null) => {
+    if (!isSaved) {
+      const data = await saveInterview(
+        //@ts-ignore
+        userId,
+        id
+      );
+      if (data) {
+        toast.success("Interview Saved");
+        setIsSaved(true);
+      } else {
+        toast.error("Interview Not Saved");
+      }
+    } else {
+      const data = await unsaveInterview(id);
+      if (data) {
+        setIsSaved(false);
+        toast.success("Interview UnSaved");
+      }
+    }
   };
   let verdictIcon;
   let verdictText;
@@ -59,7 +83,10 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">
       <div className="flex justify-between">
         <div> </div>
-        <div className="flex flex-end" onClick={handleSaveClick}>
+        <div
+          className="flex flex-end"
+          onClick={() => handleSaveClick(id, userId)}
+        >
           {isSaved ? (
             <FaBookmark className="text-white-400 text-xl" />
           ) : (

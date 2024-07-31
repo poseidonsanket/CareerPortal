@@ -35,11 +35,29 @@ export async function POST(req: NextRequest) {
   }
 }
 
-export async function GET() {
+export async function GET(req: NextRequest) {
+  const userId = req.nextUrl.searchParams.get("userId");
+  console.log(userId);
   const { data, error } = await supabase.from("interviews").select();
 
+  const { data: savedInterviews, error: savedJobsError } = await supabase
+    .from("savedinterviews")
+    .select("interviewid")
+    .eq("userid", userId);
+
+  const savedInterviewIds = new Set(
+    savedInterviews?.map((inter) => inter.interviewid)
+  );
+
+  console.log(savedInterviewIds);
+
+  const InterviewsWithSavedFlag = data?.map((inter) => ({
+    ...inter,
+    isSaved: savedInterviewIds.has(inter.id),
+  }));
+
   return Response.json({
-    Interviews: data,
+    Interviews: InterviewsWithSavedFlag,
   });
 }
 
@@ -67,14 +85,12 @@ export async function PUT(req: NextRequest) {
       .eq("interviewid", n_id);
 
     for (let i: number = 0; i < rounds.length; i++) {
-      const { error } = await supabase
-        .from("rounds")
-        .insert({
-          //@ts-ignore
-          interviewid: rounds[i].interviewid,
-          title: rounds[i].title,
-          description: rounds[i].description,
-        })
+      const { error } = await supabase.from("rounds").insert({
+        //@ts-ignore
+        interviewid: rounds[i].interviewid,
+        title: rounds[i].title,
+        description: rounds[i].description,
+      });
     }
     return NextResponse.json({
       msg: true,
