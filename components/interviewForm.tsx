@@ -45,7 +45,7 @@ const InterviewForm = () => {
     }
 
     const data = await axios.post(
-      "http://localhost:3000/api/getInterviews",
+      "https://career-portal-eight.vercel.app/api/getInterviews",
       formData
     );
 

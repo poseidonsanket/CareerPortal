@@ -33,7 +33,7 @@ const Form = ({ formdata, text, id }: any) => {
       id: id,
     };
 
-    const data = await axios.put("http://localhost:3000/api/getJobs", formData);
+    const data = await axios.put("https://career-portal-eight.vercel.app/api/getJobs", formData);
 
     if (data.data.msg === true) {
       toast.success("Data Updated successfully");
