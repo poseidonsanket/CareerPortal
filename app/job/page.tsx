@@ -20,11 +20,12 @@ const index = () => {
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<jobs[]>([]);
 
+
   useEffect(() => {
     async function getJobs() {
       const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "https://career-portal-eight.vercel.app/api/getJobs",
+        `${process.env.NEXT_PUBLIC_URL!}/api/getJobs`,
         //@ts-ignore
         {
           params: { userId },
@@ -32,7 +33,7 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
-      console.log(response.data.Jobs)
+      console.log(response.data.Jobs);
     }
     getJobs();
   }, []);

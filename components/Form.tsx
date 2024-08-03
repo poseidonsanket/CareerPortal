@@ -39,7 +39,7 @@ const Form = (props: formProps) => {
     };
 
     const data = await axios.post(
-      "https://career-portal-eight.vercel.app/api/getJobs",
+      `${process.env.NEXT_PUBLIC_URL!}/api/getJobs`,
       formData
     );
 
@@ -77,7 +77,7 @@ const Form = (props: formProps) => {
     };
 
     const data = await axios.post(
-      "https://career-portal-eight.vercel.app/api/getInternships",
+      `${process.env.NEXT_PUBLIC_URL!}/api/getInternships`,
       formData
     );
 

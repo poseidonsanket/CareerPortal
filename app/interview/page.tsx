@@ -22,7 +22,7 @@ const page = () => {
     async function getInterviews() {
       const userId = localStorage.getItem("userid");
       const response = await axios.get(
-        "https://career-portal-eight.vercel.app/api/getInterviews",
+        `${process.env.NEXT_PUBLIC_URL!}/api/getInterviews`,
         {
           params: { userId },
         }

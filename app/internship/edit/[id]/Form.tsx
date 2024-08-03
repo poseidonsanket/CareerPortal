@@ -34,7 +34,7 @@ const Form = ({ formdata, text, id }: any) => {
     };
 
     const data = await axios.put(
-      "https://career-portal-eight.vercel.app/api/getInternships",
+      `${process.env.NEXT_PUBLIC_URL!}/api/getInternships`,
       formData
     );
 

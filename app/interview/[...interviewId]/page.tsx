@@ -35,7 +35,7 @@ const page = () => {
   useEffect(() => {
     const getDescription = async () => {
       const response = await axios.get(
-        `https://career-portal-eight.vercel.app/api/getInterviews/${interviewId}`
+        `${process.env.NEXT_PUBLIC_URL!}/api/getInterviews/${interviewId}`
       );
       setLoading(false);
       setInterview(response.data.interview[0]);

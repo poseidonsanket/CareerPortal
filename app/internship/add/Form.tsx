@@ -33,7 +33,7 @@ const Form = ({ formdata, text, id }: any) => {
       id: id,
     };
 
-    const data = await axios.put("https://career-portal-eight.vercel.app/api/getJobs", formData);
+    const data = await axios.put(`${process.env.NEXT_PUBLIC_URL!}/api/getJobs`, formData);
 
     if (data.data.msg === true) {
       toast.success("Data Updated successfully");
@@ -64,7 +64,7 @@ const Form = ({ formdata, text, id }: any) => {
     };
 
     const data = await axios.post(
-      "https://career-portal-eight.vercel.app/api/getInternships",
+      `${process.env.NEXT_PUBLIC_URL!}/api/getInternships`,
       formData
     );
 
