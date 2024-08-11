@@ -110,6 +110,7 @@ export const Header = () => {
         setIsLogin(true);
         setIsMenu(false);
         toast.success("Login Successfull");
+        router.push("/");
       })
       .catch((error) => {
         alert("Error logging in");

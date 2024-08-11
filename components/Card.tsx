@@ -82,31 +82,33 @@ const Card: React.FC<CardProps> = ({
     }
   };
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80">
       <div className="flex justify-between">
         <div> </div>
-        <div
-          className="flex flex-end"
-          onClick={() => handleSaveClick(id, userId)}
-        >
-          {isSaved ? (
-            <FaBookmark className="text-white-400 text-xl" />
-          ) : (
-            <FaRegBookmark className="text-gray-400 text-xl" />
-          )}
-        </div>
+        {userId && (
+          <div
+            className="flex flex-end"
+            onClick={() => handleSaveClick(id, userId)}
+          >
+            {isSaved ? (
+              <FaBookmark className="text-white-400 text-xl" />
+            ) : (
+              <FaRegBookmark className="text-gray-400 text-xl" />
+            )}
+          </div>
+        )}
       </div>
 
-      <h2 className="text-2xl font-extrabold mb-4 flex items-center">
+      <h2 className="text-2xl font-extrabold mb-4 flex items-center break-words">
         <FaBuilding className="mr-2 text-blue-400" />
         {companyName}
       </h2>
-      <p className="text-xl font-semibold mb-3">{jobTitle}</p>
-      <div className="text-md mb-3 flex items-center">
+      <p className="text-xl font-semibold mb-3 break-words">{jobTitle}</p>
+      <div className="text-md mb-3 flex items-center break-words">
         <FaMapMarkerAlt className="mr-2 text-green-400" />
         <span>Location: {location}</span>
       </div>
-      <div className="text-md mb-3 flex items-center">
+      <div className="text-md mb-3 flex items-center break-words">
         <FaGraduationCap className="mr-2 text-yellow-400" />
         <span>Batch Eligible: {batchEligible}</span>
       </div>

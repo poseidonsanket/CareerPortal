@@ -83,7 +83,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">
       <div className="flex justify-between">
         <div> </div>
-        <div
+        {userId && <div
           className="flex flex-end"
           onClick={() => handleSaveClick(id, userId)}
         >
@@ -92,7 +92,7 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
           ) : (
             <FaRegBookmark className="text-gray-400 text-xl" />
           )}
-        </div>
+        </div>}
       </div>
       <h2 className="text-2xl font-extrabold mb-4 flex items-center">
         <FaBuilding className="mr-2" />
