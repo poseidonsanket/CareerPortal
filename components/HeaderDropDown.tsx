@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 function HeaderDropDown({
@@ -19,6 +20,12 @@ function HeaderDropDown({
       >
         My Saved Content
       </button>
+      <Link href={`${process.env.NEXT_PUBLIC_URL}/uploadresume`}>
+        <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm">
+          Upload Resume
+        </button>
+      </Link>
+
       <button
         className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm"
         onClick={handleLogout}

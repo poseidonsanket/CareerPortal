@@ -242,7 +242,7 @@ export const Header = () => {
       </div>
       {isMenu && (
         <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
-          <ul className="flex flex-col justify-center items-center gap-10 pt-10">
+          <ul className="flex flex-col justify-center items-center gap-5 pt-10">
             <li onClick={handleMenu}>
               <Link href="/internship">Internships</Link>
             </li>
@@ -304,6 +304,13 @@ export const Header = () => {
                   My Saved Content
                 </button>
               </li>
+            )}
+            {isLogin && (
+              <Link href={`${process.env.NEXT_PUBLIC_URL}/uploadresume`}>
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm">
+                  Upload Resume
+                </button>
+              </Link>
             )}
             {isLogin && (
               <li onClick={handleSignOut}>
