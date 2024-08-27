@@ -2,17 +2,31 @@
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-label";
+import uploadResume from "@/app/actions/uploadResume";
+import toast from "react-hot-toast";
 
 const Resume = () => {
-  const [file, setFile] = useState<File | null>(null);
+  const [file, setFile] = useState<File>();
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
-      setFile(e.target.files[0]); // Set the selected file
+      setFile(e.target.files[0]);
     }
   };
-  const handleResumeUpload = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleResumeUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(file);
+    if (file) {
+      try {
+        const data = await uploadResume(file);
+        if (data) {
+          toast.success("File Uploaded Successfully");
+        }
+      } catch (error) {
+        console.error("Error uploading file:", error);
+      }
+    } else {
+      console.log("No file selected.");
+      toast.success("No file selected");
+    }
   };
   return (
     <div className="flex flex-col items-center justify-center h-[100dvh] bg-background">
