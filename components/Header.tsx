@@ -81,14 +81,6 @@ export const Header = () => {
     setIsComponentVisible(false);
   };
 
-  const handleMyPosts = () => {
-    router.push("/myposts");
-  };
-
-  const handleMySavedPosts = () => {
-    router.push("/mysavedposts");
-  };
-
   const signIn = () => {
     const auth = getAuth(app);
     const provider = new GoogleAuthProvider();
@@ -230,18 +222,14 @@ export const Header = () => {
                 onMouseEnter={handleMouseEnter}
                 onMouseLeave={handleMouseLeave}
               >
-                <HeaderDropDown
-                  handleLogout={handleSignOut}
-                  handleMyPosts={handleMyPosts}
-                  handleMySavedPosts={handleMySavedPosts}
-                />
+                <HeaderDropDown handleLogout={handleSignOut} />
               </div>
             )}
           </ul>
         </div>
       </div>
       {isMenu && (
-        <div className="md:hidden fixed w-screen h-screen bg-[#1F2937]">
+        <div className="md:hidden fixed w-screen h-screen bg-[#1F2937] z-20">
           <ul className="flex flex-col justify-center items-center gap-5 pt-10">
             <li onClick={handleMenu}>
               <Link href="/internship">Internships</Link>
@@ -292,17 +280,21 @@ export const Header = () => {
               </li>
             )}
             {isLogin && (
-              <li onClick={handleMyPosts}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                  My Added Content
-                </button>
+              <li>
+                <Link href={`${process.env.NEXT_PUBLIC_URL}/myposts`}>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                    My Added Content
+                  </button>
+                </Link>
               </li>
             )}
             {isLogin && (
-              <li onClick={handleMySavedPosts}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                  My Saved Content
-                </button>
+              <li>
+                <Link href={`${process.env.NEXT_PUBLIC_URL}/mysavedposts`}>
+                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                    My Saved Content
+                  </button>
+                </Link>
               </li>
             )}
             {isLogin && (

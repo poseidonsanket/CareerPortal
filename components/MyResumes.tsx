@@ -1,0 +1,64 @@
+"use client";
+import getMyResume from "@/app/actions/getMyResume";
+import React, { useEffect, useState } from "react";
+import { Trash2, Download } from "lucide-react";
+
+const MyResumes = () => {
+  const [resumes, setResumes] = useState<any[]>([]);
+
+  const handleDownload = () => {
+    // Implement download functionality
+    window.open(`https://your-supabase-storage-url/`, "_blank");
+  };
+
+  const handleDelete = () => {
+    // Implement delete functionality
+    // You might want to show a confirmation dialog before deleting
+    console.log(`Delete file with ID:`);
+  };
+  useEffect(() => {
+    const getResumes = async () => {
+      const data = await getMyResume();
+      console.log(data);
+      setResumes(data!);
+    };
+    getResumes();
+  }, []);
+  return (
+    <div className="lg:flex lg:gap-10 lg:mx-5 mb-5">
+      {resumes.map((file) => (
+        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80 text-sm">
+          <h2 className=" font-extrabold mb-4 flex items-center break-words">
+            <span className="mr-2 text-blue-400 break-words">📄</span>
+            <span className="truncate w-full">{file.name}</span>
+          </h2>
+          <p className=" font-semibold mb-3 break-words">
+            <strong>Type:</strong> {file.metadata.mimetype}
+          </p>
+          <p className=" mb-3 break-words">
+            <strong>Size:</strong> {(file.metadata.size / 1024).toFixed(2)} KB
+          </p>
+          <div className="flex justify-between items-center mb-4">
+            <div></div>
+            <div className="flex space-x-2">
+              <button
+                onClick={handleDownload}
+                className="text-blue-400 hover:text-blue-300"
+              >
+                <Download className="h-6 w-6" />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="text-red-400 hover:text-red-300"
+              >
+                <Trash2 className="h-6 w-6" />
+              </button>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
+
+export default MyResumes;

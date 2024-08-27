@@ -4,6 +4,7 @@ import { Button } from "./ui/button";
 import { Label } from "@radix-ui/react-label";
 import uploadResume from "@/app/actions/uploadResume";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 const Resume = () => {
   const [file, setFile] = useState<File>();
@@ -37,20 +38,15 @@ const Resume = () => {
         <form className="space-y-4" onSubmit={handleResumeUpload}>
           <div className="space-y-2">
             <Label htmlFor="resume">Resume</Label>
-            <div className="relative">
-              <input
-                id="resume"
-                type="file"
-                onChange={handleFileChange}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-              <div className="border border-gray-300 rounded-lg p-2 text-gray-500 flex justify-between items-center">
-                <span className="mr-2 text-lg font-bold">
-                  {file ? file.name : "Upload Resume"}
-                </span>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
-                  Choose File
-                </button>
+            <div className="flex justify-between items-center border border-gray-300 rounded-lg p-1 text-gray-400">
+              <label className="pl-1">{file ? file.name : "Upload Resume"}</label>
+              <div className="ml-4">
+                <input
+                  id="resume"
+                  type="file"
+                  onChange={handleFileChange}
+                  className="w-[109px] text-md text-gray-900 file:py-2 file:px-4 file:border file:border-gray-300 file:rounded-md file:text-sm file:font-medium file:bg-gray-50 hover:file:bg-gray-100"
+                />
               </div>
             </div>
           </div>
@@ -58,9 +54,15 @@ const Resume = () => {
             Upload Resume
           </Button>
         </form>
+        <div className="mt-1">
+          <Link href="myresumes">
+            <Button className="w-full">My Resumes</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default Resume;
+
