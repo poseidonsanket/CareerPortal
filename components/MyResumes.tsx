@@ -3,6 +3,8 @@ import getMyResume from "@/app/actions/getMyResume";
 import React, { useEffect, useState } from "react";
 import { Trash2, Download, Eye } from "lucide-react";
 import downloadResume from "@/app/actions/downloadResume";
+import deleteResume from "@/app/actions/deleteResume";
+import toast from "react-hot-toast";
 
 const MyResumes = () => {
   const [resumes, setResumes] = useState<any[]>([]);
@@ -22,9 +24,15 @@ const MyResumes = () => {
     URL.revokeObjectURL(blobUrl);
   };
 
-  const handleDelete = () => {
+  const handleDelete = async (filename: string) => {
     // Implement delete functionality
     // You might want to show a confirmation dialog before deleting
+    const res = await deleteResume(filename);
+    if (res) {
+      toast.success("Resume deleted successfully");
+    } else {
+      toast.success("Resume not deleted");
+    }
     console.log(`Delete file with ID:`);
   };
   useEffect(() => {
@@ -34,7 +42,7 @@ const MyResumes = () => {
       setResumes(data!);
     };
     getResumes();
-  }, []);
+  }, [handleDelete]);
   return (
     <div className="lg:grid lg:gap-10 lg:mx-5 mb-5 lg:grid-cols-4">
       {resumes.map((file) => (
@@ -75,7 +83,7 @@ const MyResumes = () => {
               </button>
 
               <button
-                onClick={handleDelete}
+                onClick={() => handleDelete(file.name)}
                 className="text-red-400 hover:text-red-300"
               >
                 <Trash2 className="h-6 w-6" />
