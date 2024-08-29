@@ -26,7 +26,7 @@ const Resume = () => {
       }
     } else {
       console.log("No file selected.");
-      toast.success("No file selected");
+      toast.error("No file selected");
     }
   };
   return (

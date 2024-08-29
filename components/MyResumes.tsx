@@ -1,10 +1,11 @@
 "use client";
-import getMyResume from "@/app/actions/getMyResume";
 import React, { useEffect, useState } from "react";
 import { Trash2, Download, Eye } from "lucide-react";
 import downloadResume from "@/app/actions/downloadResume";
 import deleteResume from "@/app/actions/deleteResume";
 import toast from "react-hot-toast";
+import { fetchResume } from "@/app/actions/fetchResume";
+import { handleMarkAsDefault } from "@/app/actions/handleMarkAsDefault";
 
 const MyResumes = () => {
   const [resumes, setResumes] = useState<any[]>([]);
@@ -30,42 +31,68 @@ const MyResumes = () => {
     const res = await deleteResume(filename);
     if (res) {
       toast.success("Resume deleted successfully");
+      setResumes((prevResumes) =>
+        prevResumes.filter((file) => file.file_name !== filename)
+      );
     } else {
       toast.success("Resume not deleted");
     }
     console.log(`Delete file with ID:`);
   };
+
+  const handleButtonClick = async (file: any) => {
+    const data = await handleMarkAsDefault(file.id);
+    if (data) {
+      toast.success(
+        `${file.file_name.split("_").slice(2).join("_")} marked as default`
+      );
+      const updatedResumes = resumes.map((resume) => ({
+        ...resume,
+        is_default: resume.id === file.id ? true : false,
+      }));
+
+      updatedResumes.sort((a, b) => (b.is_default ? 1 : -1));
+
+      setResumes(updatedResumes);
+
+      
+
+      console.log(updatedResumes);
+    } else {
+      toast.error("Mark as default error");
+    }
+  };
   useEffect(() => {
     const getResumes = async () => {
-      const data = await getMyResume();
+      const data = await fetchResume();
       console.log(data);
       setResumes(data!);
     };
     getResumes();
-  }, [handleDelete]);
+  }, []);
+
+  if (resumes.length === 0) {
+    return <div className="">No resumes Uploaded</div>;
+  }
   return (
     <div className="lg:grid lg:gap-10 lg:mx-5 mb-5 lg:grid-cols-4">
-      {resumes.map((file) => (
-        <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80 text-sm">
+      {resumes!.map((file) => (
+        <div
+          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80 text-sm"
+          key={file.id}
+        >
           <h2 className=" font-extrabold mb-4 flex items-center break-words">
             <span className="mr-2 text-blue-400 break-words">📄</span>
             <span className="truncate w-full">
-              {file.name.split("_").slice(2).join("_")}
+              {file.file_name.split("_").slice(2).join("_")}
             </span>
           </h2>
-          <p className=" font-semibold mb-3 break-words">
-            <strong>Type:</strong> {file.metadata.mimetype}
-          </p>
-          <p className=" mb-3 break-words">
-            <strong>Size:</strong> {(file.metadata.size / 1024).toFixed(2)} KB
-          </p>
           <div className="flex justify-between items-center">
-            <div></div>
             <div className="flex space-x-2 items-center justify-center">
               <a
                 href={
                   "https://ncjcgoqotqemmffuhdec.supabase.co/storage/v1/object/public/resume/" +
-                  file.name
+                  file.file_name
                 }
                 target="_blank"
                 rel="noopener noreferrer"
@@ -77,18 +104,26 @@ const MyResumes = () => {
 
               <button
                 className="text-blue-400 hover:text-blue-300"
-                onClick={() => handleDownload(file.name)}
+                onClick={() => handleDownload(file.file_name)}
               >
                 <Download className="h-6 w-6" />
               </button>
 
               <button
-                onClick={() => handleDelete(file.name)}
+                onClick={() => handleDelete(file.file_name)}
                 className="text-red-400 hover:text-red-300"
               >
                 <Trash2 className="h-6 w-6" />
               </button>
             </div>
+            <button
+              onClick={() => handleButtonClick(file)}
+              className={`text-green-400 hover:text-green-300 ${
+                file.is_default ? "font-bold" : ""
+              }`}
+            >
+              {file.is_default ? "Default Resume" : "Mark as Default"}
+            </button>
           </div>
         </div>
       ))}
