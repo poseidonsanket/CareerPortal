@@ -6,9 +6,12 @@ import deleteResume from "@/app/actions/deleteResume";
 import toast from "react-hot-toast";
 import { fetchResume } from "@/app/actions/fetchResume";
 import { handleMarkAsDefault } from "@/app/actions/handleMarkAsDefault";
+import { Header } from "./Header";
+import Footer from "./Footer";
 
 const MyResumes = () => {
   const [resumes, setResumes] = useState<any[]>([]);
+  const [loading, setLoading] = useState<true | false>(true);
 
   const handleDownload = async (filename: string) => {
     // Implement download functionality
@@ -55,8 +58,6 @@ const MyResumes = () => {
 
       setResumes(updatedResumes);
 
-      
-
       console.log(updatedResumes);
     } else {
       toast.error("Mark as default error");
@@ -66,19 +67,22 @@ const MyResumes = () => {
     const getResumes = async () => {
       const data = await fetchResume();
       console.log(data);
+      data.sort((a, b) => (b.is_default ? 1 : -1));
+      setLoading(false);
       setResumes(data!);
     };
     getResumes();
   }, []);
 
-  if (resumes.length === 0) {
-    return <div className="">No resumes Uploaded</div>;
-  }
-  return (
+  return loading ? (
+    <div className="flex justify-center items-center w-full min-h-[70vh]">
+      <div className="loader"></div>
+    </div>
+  ) : (
     <div className="lg:grid lg:gap-10 lg:mx-5 mb-5 lg:grid-cols-4">
       {resumes!.map((file) => (
         <div
-          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80 text-sm"
+          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg lg:mx-auto mt-8 mx-10 lg:max-w-80 text-sm"
           key={file.id}
         >
           <h2 className=" font-extrabold mb-4 flex items-center break-words">
