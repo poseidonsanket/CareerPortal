@@ -65,7 +65,7 @@ const Card: React.FC<CardProps> = ({
   };
 
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 min-w-80 mx-10">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 lg:max-w-80 mx-10">
       <div className="flex justify-between">
         <div> </div>
         <div className="flex space-x-4">
@@ -91,8 +91,8 @@ const Card: React.FC<CardProps> = ({
         <FaMapMarkerAlt className="mr-2 text-green-400" />
         <span>Location: {location}</span>
       </div>
-      <div className="text-md mb-3 flex items-center">
-        <FaGraduationCap className="mr-2 text-yellow-400" />
+      <div className="text-md mb-3 flex">
+        <FaGraduationCap className="mr-2 text-yellow-400 h-6 w-6" />
         <span>Batch Eligible: {batchEligible}</span>
       </div>
       <div className="text-right mt-4">

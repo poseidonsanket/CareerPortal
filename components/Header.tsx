@@ -281,32 +281,47 @@ export const Header = () => {
             )}
             {isLogin && (
               <li>
-                <Link href={`${process.env.NEXT_PUBLIC_URL}/myposts`}>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                    My Added Content
-                  </button>
-                </Link>
+                <div className="w-full max-w-xs">
+                  {" "}
+                  <Link href={`${process.env.NEXT_PUBLIC_URL}/myposts`}>
+                    <button
+                      className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm"
+                    >
+                      My Added Content
+                    </button>
+                  </Link>
+                </div>
               </li>
             )}
             {isLogin && (
               <li>
-                <Link href={`${process.env.NEXT_PUBLIC_URL}/mysavedposts`}>
-                  <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
-                    My Saved Content
-                  </button>
-                </Link>
+                <div className="w-full max-w-xs">
+                  {" "}
+                  <Link href={`${process.env.NEXT_PUBLIC_URL}/mysavedposts`}>
+                    <button
+                      className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm"
+                    >
+                      My Saved Content
+                    </button>
+                  </Link>
+                </div>
               </li>
             )}
             {isLogin && (
+              <div className="">
+              {" "}
               <Link href={`${process.env.NEXT_PUBLIC_URL}/uploadresume`}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline text-sm">
+                <button
+                  className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-[25px] rounded focus:outline-none focus:shadow-outline text-sm"
+                >
                   Upload Resume
                 </button>
               </Link>
+            </div>
             )}
             {isLogin && (
               <li onClick={handleSignOut}>
-                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mr-2 text-sm">
+                <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-14 rounded focus:outline-none focus:shadow-outline text-sm">
                   Logout
                 </button>
               </li>

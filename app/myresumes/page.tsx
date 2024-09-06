@@ -8,7 +8,7 @@ const page = () => {
     <div className="flex flex-col min-h-screen min-w-screen">
       <Header />
 
-      <div className="flex-1 mt-20 max-w-full max-h-full">
+      <div className="flex-1 mt-20">
         <MyResumes/>
       </div>
 

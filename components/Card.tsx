@@ -82,7 +82,7 @@ const Card: React.FC<CardProps> = ({
     }
   };
   return (
-    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 min-w-80">
+    <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg lg:mx-auto mt-8 mx-10 lg:max-w-80">
       <div className="flex justify-between">
         <div> </div>
         {userId && (
@@ -104,12 +104,12 @@ const Card: React.FC<CardProps> = ({
         {companyName}
       </h2>
       <p className="text-xl font-semibold mb-3 break-words">{jobTitle}</p>
-      <div className="text-md mb-3 flex items-center break-words">
+      <div className="text-md mb-3 flex items-center truncate break-words">
         <FaMapMarkerAlt className="mr-2 text-green-400" />
         <span>Location: {location}</span>
       </div>
-      <div className="text-md mb-3 flex items-center break-words">
-        <FaGraduationCap className="mr-2 text-yellow-400" />
+      <div className="text-md mb-3 flex break-words">
+        <FaGraduationCap className="mr-2 text-yellow-400 h-6 w-6 " />
         <span>Batch Eligible: {batchEligible}</span>
       </div>
       <div className="text-right mt-4">

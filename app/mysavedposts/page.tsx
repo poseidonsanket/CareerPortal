@@ -85,7 +85,7 @@ const Page = () => {
           </SectionButton>
         </div>
         {loading ? (
-          <div className="flex-1 flex justify-center items-center min-h-screen">
+          <div className="flex-1 flex justify-center items-center h-[60vh]">
             <div className="loader"></div>
           </div>
         ) : (

@@ -8,6 +8,7 @@ import Link from "next/link";
 
 const Resume = () => {
   const [file, setFile] = useState<File>();
+  const [loading, setLoading] = useState(false);
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
@@ -16,6 +17,7 @@ const Resume = () => {
   const handleResumeUpload = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (file) {
+      setLoading(true);
       try {
         const data = await uploadResume(file);
         if (data) {
@@ -23,6 +25,8 @@ const Resume = () => {
         }
       } catch (error) {
         console.error("Error uploading file:", error);
+      } finally {
+        setLoading(false); // Stop loading
       }
     } else {
       console.log("No file selected.");
@@ -30,7 +34,12 @@ const Resume = () => {
     }
   };
   return (
-    <div className="flex flex-col items-center justify-center h-[100dvh] bg-background">
+    <div className="flex flex-col items-center justify-center bg-background max-w-200 lg:mt-0 mt-20">
+      {loading && (
+        <div className="absolute inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="loader"></div>
+        </div>
+      )}
       <div className="max-w-md w-full space-y-4 p-6 rounded-lg shadow-lg bg-card">
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Upload Your Resume</h1>
@@ -39,7 +48,9 @@ const Resume = () => {
           <div className="space-y-2">
             <Label htmlFor="resume">Resume</Label>
             <div className="flex justify-between items-center border border-gray-300 rounded-lg p-1 text-gray-400">
-              <label className="pl-1">{file ? file.name : "Upload Resume"}</label>
+              <label className="pl-1">
+                {file ? file.name : "Upload Resume"}
+              </label>
               <div className="ml-4">
                 <input
                   id="resume"
@@ -65,4 +76,3 @@ const Resume = () => {
 };
 
 export default Resume;
-

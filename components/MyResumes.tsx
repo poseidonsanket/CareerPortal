@@ -82,7 +82,7 @@ const MyResumes = () => {
     <div className="lg:grid lg:gap-10 lg:mx-5 mb-5 lg:grid-cols-4">
       {resumes!.map((file) => (
         <div
-          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg lg:mx-auto mt-8 mx-10 lg:max-w-80 text-sm"
+          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg lg:mx-auto mt-8 mx-10 lg:max-w-80 text-md"
           key={file.id}
         >
           <h2 className=" font-extrabold mb-4 flex items-center break-words">
