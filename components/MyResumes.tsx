@@ -80,57 +80,61 @@ const MyResumes = () => {
     </div>
   ) : (
     <div className="lg:grid lg:gap-10 lg:mx-5 mb-5 lg:grid-cols-4">
-      {resumes!.map((file) => (
-        <div
-          className="bg-gray-800 text-white p-6 rounded-lg shadow-lg lg:mx-auto mt-8 mx-10 lg:max-w-80 text-md"
-          key={file.id}
-        >
-          <h2 className=" font-extrabold mb-4 flex items-center break-words">
-            <span className="mr-2 text-blue-400 break-words">📄</span>
-            <span className="truncate w-full">
-              {file.file_name.split("_").slice(2).join("_")}
-            </span>
-          </h2>
-          <div className="flex justify-between items-center">
-            <div className="flex space-x-2 items-center justify-center">
-              <a
-                href={
-                  "https://ncjcgoqotqemmffuhdec.supabase.co/storage/v1/object/public/resume/" +
-                  file.file_name
-                }
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <button className="text-blue-400 hover:text-blue-300">
-                  <Eye className="h-6 w-6 mt-2" />
+      {resumes.length > 0 ? (
+        resumes!.map((file) => (
+          <div
+            className="bg-gray-800 text-white p-6 rounded-lg shadow-lg lg:mx-auto mt-8 mx-10 lg:max-w-80 text-md"
+            key={file.id}
+          >
+            <h2 className=" font-extrabold mb-4 flex items-center break-words">
+              <span className="mr-2 text-blue-400 break-words">📄</span>
+              <span className="truncate w-full">
+                {file.file_name.split("_").slice(2).join("_")}
+              </span>
+            </h2>
+            <div className="flex justify-between items-center">
+              <div className="flex space-x-2 items-center justify-center">
+                <a
+                  href={
+                    "https://ncjcgoqotqemmffuhdec.supabase.co/storage/v1/object/public/resume/" +
+                    file.file_name
+                  }
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button className="text-blue-400 hover:text-blue-300">
+                    <Eye className="h-6 w-6 mt-2" />
+                  </button>
+                </a>
+
+                <button
+                  className="text-blue-400 hover:text-blue-300"
+                  onClick={() => handleDownload(file.file_name)}
+                >
+                  <Download className="h-6 w-6" />
                 </button>
-              </a>
 
+                <button
+                  onClick={() => handleDelete(file.file_name)}
+                  className="text-red-400 hover:text-red-300"
+                >
+                  <Trash2 className="h-6 w-6" />
+                </button>
+              </div>
               <button
-                className="text-blue-400 hover:text-blue-300"
-                onClick={() => handleDownload(file.file_name)}
+                onClick={() => handleButtonClick(file)}
+                className={`text-green-400 hover:text-green-300 ${
+                  file.is_default ? "font-bold" : ""
+                }`}
               >
-                <Download className="h-6 w-6" />
-              </button>
-
-              <button
-                onClick={() => handleDelete(file.file_name)}
-                className="text-red-400 hover:text-red-300"
-              >
-                <Trash2 className="h-6 w-6" />
+                {file.is_default ? "Default Resume" : "Mark as Default"}
               </button>
             </div>
-            <button
-              onClick={() => handleButtonClick(file)}
-              className={`text-green-400 hover:text-green-300 ${
-                file.is_default ? "font-bold" : ""
-              }`}
-            >
-              {file.is_default ? "Default Resume" : "Mark as Default"}
-            </button>
           </div>
-        </div>
-      ))}
+        ))
+      ) : (
+        <h1 className="col-span-4 text-center py-8">No Resumes</h1>
+      )}
     </div>
   );
 };
