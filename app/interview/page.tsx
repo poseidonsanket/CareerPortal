@@ -2,6 +2,7 @@
 import Footer from "@/components/Footer";
 import { Header } from "@/components/Header";
 import InterviewCard from "@/components/InterviewCard";
+import SearchBox from "@/components/SearchBox";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -17,6 +18,8 @@ interface interviews {
 const page = () => {
   const [loading, setLoading] = useState(true);
   const [interviews, setInterviews] = useState<interviews[]>([]);
+  const [searchContext, setSearchContext] = useState<string>("companyname");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     async function getInterviews() {
@@ -29,7 +32,6 @@ const page = () => {
       );
       setLoading(false);
       setInterviews(response.data.Interviews);
-      console.log(response.data.Interviews);
     }
     getInterviews();
   }, []);
@@ -48,8 +50,15 @@ const page = () => {
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
+        <SearchBox
+          searchQuery={searchQuery}
+          searchContext={searchContext}
+          setSearchQuery={setSearchQuery}
+          setSearchContext={setSearchContext}
+          text={"interview"}
+        />
         <div className="lg:grid lg:grid-cols-4">
-          {interviews.length > 0 && interviews? (
+          {interviews.length > 0 && interviews ? (
             interviews?.map((inter) => (
               <InterviewCard
                 key={inter.id}

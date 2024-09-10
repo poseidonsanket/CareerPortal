@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import Footer from "@/components/Footer";
 import Card from "@/components/Card";
 import axios from "axios";
+import SearchBox from "@/components/SearchBox";
 
 interface jobs {
   companyname: string;
@@ -19,7 +20,8 @@ interface jobs {
 const index = () => {
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<jobs[]>([]);
-
+  const [searchContext, setSearchContext] = useState<string>("companyname");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     async function getJobs() {
@@ -33,7 +35,6 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
-      console.log(response.data.Jobs);
     }
     getJobs();
   }, []);
@@ -53,6 +54,13 @@ const index = () => {
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
+        <SearchBox
+          searchQuery={searchQuery}
+          searchContext={searchContext}
+          setSearchQuery={setSearchQuery}
+          setSearchContext={setSearchContext}
+          text={"job"}
+        />
         <div className="lg:grid lg:grid-cols-4">
           {jobs.length > 0 && jobs ? (
             jobs.map((job) => (

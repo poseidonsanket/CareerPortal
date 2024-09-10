@@ -2,6 +2,7 @@
 import Card from "@/components/Card";
 import Footer from "@/components/Footer";
 import { Header } from "@/components/Header";
+import SearchBox from "@/components/SearchBox";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
@@ -19,6 +20,8 @@ interface internships {
 const page = () => {
   const [loading, setLoading] = useState(true);
   const [ints, setInts] = useState<internships[]>([]);
+  const [searchContext, setSearchContext] = useState<string>("companyname");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   useEffect(() => {
     async function getInternships() {
@@ -50,6 +53,13 @@ const page = () => {
       <Header />
 
       <div className="flex-1 mt-20 mb-20">
+        <SearchBox
+          searchQuery={searchQuery}
+          searchContext={searchContext}
+          setSearchQuery={setSearchQuery}
+          setSearchContext={setSearchContext}
+          text={"internship"}
+        />
         <div className="lg:grid lg:grid-cols-4">
           {ints.length > 0 && ints ? (
             ints?.map((int) => (
