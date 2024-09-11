@@ -19,7 +19,6 @@ const Page = () => {
     setActiveSection(section);
   };
 
-
   useEffect(() => {
     const userId = localStorage.getItem("userid");
     const getMyPost = async () => {
@@ -40,7 +39,12 @@ const Page = () => {
       }
     };
     getMyPost();
+    console.log(jobs);
+    console.log(interviews);
   }, [activeSection]);
+
+  console.log(jobs);
+  console.log(interviews);
 
   const handleDeleteCard = (id: string) => {
     setJobs((prevJobs) => prevJobs?.filter((job) => job.id !== id));
@@ -86,7 +90,7 @@ const Page = () => {
         ) : (
           <div className="lg:grid lg:grid-cols-4">
             {activeSection !== "interview" ? (
-              jobs ? (
+              jobs && jobs.length > 0 ? (
                 jobs.map((job) => (
                   <Card
                     text={activeSection}
@@ -103,11 +107,11 @@ const Page = () => {
                   />
                 ))
               ) : (
-                <div className="col-span-4 text-center text-gray-600 py-8">
-                  No jobs/internships data available
+                <div className="col-span-4 text-center text-gray-400 py-8">
+                  {"No Added " + activeSection}
                 </div>
               )
-            ) : interviews ? (
+            ) : interviews && interviews.length > 0 ? (
               interviews.map((inter) => (
                 <MyPostInterviewCard
                   key={inter.id}
@@ -121,7 +125,7 @@ const Page = () => {
               ))
             ) : (
               <div className="col-span-4 text-center text-gray-400 py-8">
-                No interview data available
+                {"No Added " + activeSection}
               </div>
             )}
           </div>

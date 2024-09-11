@@ -10,7 +10,6 @@ import { getMySavedInternship } from "../actions/getSavedInternship";
 import { getMySavedInterviews } from "../actions/getSavedInterview";
 import SavedInterviewCard from "@/components/MySavedInterviewCard";
 
-
 const Page = () => {
   const [activeSection, setActiveSection] = useState("job");
   const [loading, setLoading] = useState(true);
@@ -20,7 +19,6 @@ const Page = () => {
   const handleSectionClick = (section: string) => {
     setActiveSection(section);
   };
-
 
   useEffect(() => {
     const getMyPost = async () => {
@@ -54,7 +52,6 @@ const Page = () => {
     setInterviews((prevInterviews) =>
       prevInterviews?.filter((inter) => inter.id !== id)
     );
-
   };
 
   return (
@@ -108,8 +105,8 @@ const Page = () => {
                   />
                 ))
               ) : (
-                <div className="col-span-4 text-center text-gray-600 py-8">
-                  No jobs/internships data available
+                <div className="col-span-4 text-center text-gray-400 py-8">
+                  {"No Added " + activeSection}
                 </div>
               )
             ) : interviews && interviews.length > 0 ? (
@@ -126,7 +123,7 @@ const Page = () => {
               ))
             ) : (
               <div className="col-span-4 text-center text-gray-400 py-8">
-                No interview data available
+                {"No Added " + activeSection}
               </div>
             )}
           </div>
