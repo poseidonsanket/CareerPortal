@@ -36,7 +36,7 @@ const SearchBox = ({
           onChange={(e) => setSearchContext(e.target.value)}
         >
           <option value="companyname">Company Name</option>
-          {(text === "job" || text === "interview   ") && <option value="jobtitle">Job Title</option>}
+          {(text === "job" || text === "interview") && <option value="jobtitle">Job Title</option>}
           {text === "internship" && <option value="inttitle">Internship Title</option>}
           {text != "interview" && <option value="location">Location</option>}
         </select>
