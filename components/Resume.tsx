@@ -20,8 +20,14 @@ const Resume = () => {
       setLoading(true);
       try {
         const data = await uploadResume(file);
-        if (data) {
-          toast.success("File Uploaded Successfully");
+        if (data === "Cannot Upload more than 3 resumes") {
+          toast.error("Cannot Upload more than 3 resumes");
+        }
+        if (data == true) {
+          toast.success("Resume Uploaded Successfully");
+        }
+        else if(data == false){
+          toast.error("Cannot Upload File");
         }
       } catch (error) {
         console.error("Error uploading file:", error);

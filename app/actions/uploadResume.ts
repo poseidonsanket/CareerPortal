@@ -19,6 +19,10 @@ export default async function uploadResume(file: File) {
     return false;
   }
 
+  if (resumeData.length === 3) {
+    return "Cannot Upload more than 3 resumes";
+  }
+
   const { data, error } = await supabase.storage
     .from("resume")
     .upload(fileName, file, {
@@ -35,7 +39,7 @@ export default async function uploadResume(file: File) {
     {
       user_id: userId,
       file_name: fileName,
-      is_default: resumeData.length === 0 ? true : false, 
+      is_default: resumeData.length === 0 ? true : false,
     },
   ]);
 

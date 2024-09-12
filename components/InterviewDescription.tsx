@@ -17,7 +17,7 @@ interface rounds {
 const InterviewDescription = ({interview,rounds}: {interview: interview, rounds: rounds[]}) => {
   return (
     <div className="flex flex-col bg-gray-900 text-white p-12 mt-20">
-      <div className="max-w-lg">
+      <div className="max-w-full">
         <div className="flex items-center mb-8">
           <div className="flex flex-col">
             <h1 className="text-4xl font-bold mb-4">{interview.companyname}</h1>
