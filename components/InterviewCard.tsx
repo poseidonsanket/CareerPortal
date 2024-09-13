@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { saveInterview } from "@/app/actions/saveInterview";
 import { unsaveInterview } from "@/app/actions/unsaveInterview";
+import Link from "next/link";
 
 interface InterviewCardProps {
   companyName: string;
@@ -83,16 +84,18 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">
       <div className="flex justify-between">
         <div> </div>
-        {userId && <div
-          className="flex flex-end"
-          onClick={() => handleSaveClick(id, userId)}
-        >
-          {isSaved ? (
-            <FaBookmark className="text-white-400 text-xl" />
-          ) : (
-            <FaRegBookmark className="text-gray-400 text-xl" />
-          )}
-        </div>}
+        {userId && (
+          <div
+            className="flex flex-end"
+            onClick={() => handleSaveClick(id, userId)}
+          >
+            {isSaved ? (
+              <FaBookmark className="text-white-400 text-xl" />
+            ) : (
+              <FaRegBookmark className="text-gray-400 text-xl" />
+            )}
+          </div>
+        )}
       </div>
       <h2 className="text-2xl font-extrabold mb-4 flex items-center">
         <FaBuilding className="mr-2" />
@@ -115,13 +118,14 @@ const InterviewCard: React.FC<InterviewCardProps> = ({
             View Details
           </a>
         ) : (
-          <button
-            className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => router.push(`/interview/${id}`)}
-          >
-            <FaExternalLinkAlt className="mr-2" />
-            View Details
-          </button>
+          <Link href={"/interview/" + id}>
+            <button
+              className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              <FaExternalLinkAlt className="mr-2" />
+              View Details
+            </button>
+          </Link>
         )}
       </div>
     </div>

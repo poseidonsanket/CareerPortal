@@ -12,6 +12,7 @@ import {
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { unsaveInterview } from "@/app/actions/unsaveInterview";
+import Link from "next/link";
 
 interface InterviewCardProps {
   companyName: string;
@@ -100,13 +101,15 @@ const SavedInterviewCard: React.FC<InterviewCardProps> = ({
             View Details
           </a>
         ) : (
-          <button
-            className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => router.push(`/interview/${id}`)}
-          >
-            <FaExternalLinkAlt className="mr-2" />
-            View Details
-          </button>
+          <Link href={"/interview/" + id}>
+            <button
+              className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              onClick={() => router.push(`/interview/${id}`)}
+            >
+              <FaExternalLinkAlt className="mr-2" />
+              View Details
+            </button>
+          </Link>
         )}
       </div>
     </div>

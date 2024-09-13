@@ -6,14 +6,12 @@ import {
   FaTimesCircle,
   FaExternalLinkAlt,
   FaClock,
-  FaBookmark,
-  FaRegBookmark,
   FaEdit,
   FaTrash,
 } from "react-icons/fa";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import { deleteInterview } from "@/app/actions/deleteInterview";
+import Link from "next/link";
 
 interface InterviewCardProps {
   companyName: string;
@@ -32,7 +30,6 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
   link,
   onDelete,
 }) => {
-  const router = useRouter();
 
   let verdictIcon;
   let verdictText;
@@ -56,9 +53,6 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
       verdictColorClass = "text-yellow-400";
       break;
   }
-  function handleEditClick() {
-    router.push(`/interview-edit/${id}`);
-  }
 
   async function handleDeleteClick() {
     const id1 = id.toString();
@@ -67,17 +61,18 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
       toast.success("Data deleted Successfully");
       onDelete(id);
     }
-
   }
   return (
     <div className="bg-gray-800 text-white p-6 rounded-lg shadow-lg max-w-lg mt-8 min-w-80 lg:mx-auto mx-10">
       <div className="flex justify-between">
         <div> </div>
         <div className="flex flex-end gap-4">
-          <FaEdit
-            className="text-blue-400 text-xl cursor-pointer"
-            onClick={handleEditClick}
-          />
+          <Link href={"/interview-edit/"+id}>
+            <FaEdit
+              className="text-blue-400 text-xl cursor-pointer"
+            />
+          </Link>
+
           <FaTrash
             className="text-red-400 text-xl cursor-pointer"
             onClick={handleDeleteClick}
@@ -105,13 +100,14 @@ const MyPostInterviewCard: React.FC<InterviewCardProps> = ({
             View Details
           </a>
         ) : (
-          <button
-            className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => router.push(`/interview/${id}`)}
-          >
-            <FaExternalLinkAlt className="mr-2" />
-            View Details
-          </button>
+          <Link href={"/interview/" + id}>
+            <button
+              className="flex items-center justify-center max-w-fit bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+              <FaExternalLinkAlt className="mr-2" />
+              View Details
+            </button>
+          </Link>
         )}
       </div>
     </div>

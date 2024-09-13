@@ -1,7 +1,7 @@
 "use client";
 import { deleteInternship } from "@/app/actions/deleteInternship";
 import { deleteJob } from "@/app/actions/deleteJob";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import {
@@ -37,14 +37,6 @@ const Card: React.FC<CardProps> = ({
   intTitle,
   onDelete,
 }) => {
-
-  const router = useRouter();
-  const handleEditClick = () => {
-    // Add edit functionality here
-    router.push(`/${text}/edit/${id}`);
-
-  };
-
   const handleDeleteClick = async () => {
     if (text === "job") {
       const res = await deleteJob(id);
@@ -69,10 +61,15 @@ const Card: React.FC<CardProps> = ({
       <div className="flex justify-between">
         <div> </div>
         <div className="flex space-x-4">
-          <FaEdit
-            className="text-blue-400 text-xl cursor-pointer"
-            onClick={handleEditClick}
-          />
+          {text === "job" ? (
+            <Link href={"/job/edit/" + id}>
+              <FaEdit className="text-blue-400 text-xl cursor-pointer" />
+            </Link>
+          ) : (
+            <Link href={"/internship/edit/" + id}>
+              <FaEdit className="text-blue-400 text-xl cursor-pointer" />
+            </Link>
+          )}
           <FaTrash
             className="text-red-400 text-xl cursor-pointer"
             onClick={handleDeleteClick}
