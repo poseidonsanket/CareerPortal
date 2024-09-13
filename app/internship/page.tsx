@@ -20,6 +20,7 @@ interface internships {
 const page = () => {
   const [loading, setLoading] = useState(true);
   const [ints, setInts] = useState<internships[]>([]);
+  const [OriginalInts, setOriginalInts] = useState<internships[]>([]);
   const [searchContext, setSearchContext] = useState<string>("companyname");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -34,7 +35,7 @@ const page = () => {
       );
       setLoading(false);
       setInts(response.data.Internships);
-      console.log(response.data.Internships);
+      setOriginalInts(response.data.Internships)
     }
     getInternships();
   }, []);
@@ -59,6 +60,9 @@ const page = () => {
           setSearchQuery={setSearchQuery}
           setSearchContext={setSearchContext}
           text={"internship"}
+          data={OriginalInts}
+          originalData={OriginalInts}
+          setFilteredResults={setInts}
         />
         <div className="lg:grid lg:grid-cols-4">
           {ints.length > 0 && ints ? (

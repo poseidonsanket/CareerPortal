@@ -20,6 +20,7 @@ interface jobs {
 const index = () => {
   const [loading, setLoading] = useState(true);
   const [jobs, setJobs] = useState<jobs[]>([]);
+  const [OriginalJobs, setOriginalJobs] = useState<jobs[]>([]);
   const [searchContext, setSearchContext] = useState<string>("companyname");
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -35,6 +36,7 @@ const index = () => {
       );
       setLoading(false);
       setJobs(response.data.Jobs);
+      setOriginalJobs(response.data.Jobs);
     }
     getJobs();
   }, []);
@@ -60,6 +62,9 @@ const index = () => {
           setSearchQuery={setSearchQuery}
           setSearchContext={setSearchContext}
           text={"job"}
+          data={OriginalJobs}
+          originalData={OriginalJobs}
+          setFilteredResults={setJobs}
         />
         <div className="lg:grid lg:grid-cols-4">
           {jobs.length > 0 && jobs ? (
